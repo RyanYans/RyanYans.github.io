@@ -1,12 +1,12 @@
 # Site settings
 title: RyanYans
-SEOTitle: 柏宁的博客 | RyanYans
+SEOTitle: 柏宁的博客 | RyanYans blog
 header-img: img/home-bg.jpg
 email: huxpro@gmail.com
 description: "关于前端、后端与设计、折腾家 | 柏宁，Web & Mobile Lover，Front-End Engineer，UX Designer | 这里是 @Rya柏宁 的个人博客，与你一起发现更大的世界。"
-keyword: "柏宁, Rya柏宁, Ryanyans, 博客, 个人网站, 互联网, 前端, 后端 ，设计, 产品, xx的男朋友"
+keyword: "柏宁, Rya柏宁, RyanYans, 博客, 个人网站, 互联网, 前端, 后端 ，设计, 产品"
 url: "http://ryanyans.github.io/"              # your host, for absolute URL
-baseurl: ""                             # for example, '/blog' if your blog hosted on 'host/blog'
+baseurl: "http://ryanyans.github.io/"                             # for example, '/blog' if your blog hosted on 'host/blog'
 
 
 
@@ -62,7 +62,7 @@ disqus_share: true    		   # set to false if you want to use Comment without Sha
 ba_track_id: 4cc1f2d8f3067386cc5cdb626a202900
 # Google Analytics
 ga_track_id: 'UA-49627206-1'            # Format: UA-xxxxxx-xx
-ga_domain: huangxuan.me
+ga_domain: ryanyans.github.io
 
 
 
@@ -79,20 +79,20 @@ featured-condition-size: 1              # A tag will be featured if the size of 
 
 
 
-# Friends
-friends: [
+# Links
+Links: [
     {
         title: "前端外刊评论",
         href: "http://qianduan.guru/"
     },{
-        title: "天镶的博客",
-        href: "http://lingyu.wang/"
+        title: "stormzhang",
+        href: "http://stormzhang.com/"
     },{
-        title: "Luke的自留地",
-        href: "http://hmqk1995.github.io"
+        title: "宋哲的国际博客",
+        href: "http://zhesong.info/"
     },{
-        title: "Ebn's Blog",
-        href: "http://ebnbin.com/"
+        title: "刘未鹏 | MIND HACKS",
+        href: "http://mindhacks.cn/"
     },{
         title: "SmdCn's Blog",
         href: "http://blog.smdcn.net"
@@ -103,8 +103,8 @@ friends: [
         title: "尹峰以为",
         href: "http://ingf.github.io/"
     },{
-        title: "前端神盾局",
-        href: "http://wepiaofei.github.io/blog/"
+        title: "Seaborn Lee",
+        href: "http://seabornlee.cn/"
     },{
         title: "五道口摩羯宅男",
         href: "http://hujiaweibujidao.github.io/"
