@@ -12,11 +12,11 @@ baseurl: "http://ryanyans.github.io/"                             # for example,
 
 # SNS settings
 RSS: false
-weibo_username:     Ryan_Mr-袁某
+weibo_username:     raxccyuan
 zhihu_username:     RyanYans
 github_username:    RyanYans
-#twitter_username:  RyanYans
-facebook_username:  RyanYans
+#twitter_username:  RyanYans32
+facebook_username:  RyanYans32
 
 
 
