@@ -79,8 +79,8 @@ featured-condition-size: 1              # A tag will be featured if the size of 
 
 
 
-# Links
-Links: [
+# Friends
+friends: [
     {
         title: "前端外刊评论",
         href: "http://qianduan.guru/"
