@@ -100,6 +100,9 @@ friends: [
         title: "SmdCn's Blog",
         href: "http://blog.smdcn.net"
     },{
+        title: "五道口摩羯宅男",
+        href: "http://hujiaweibujidao.github.io/"
+    },{
         title: "DHong Say",
         href: "http://dhong.co"
     },{
@@ -108,8 +111,5 @@ friends: [
     },{
         title: "Derek Sivers",
         href: "http://sivers.org/"
-    },{
-        title: "五道口摩羯宅男",
-        href: "http://hujiaweibujidao.github.io/"
     }
 ]
