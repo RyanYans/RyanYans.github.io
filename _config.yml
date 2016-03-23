@@ -82,8 +82,8 @@ featured-condition-size: 1              # A tag will be featured if the size of 
 # Friends
 friends: [
     {
-        title: "前端外刊评论",
-        href: "http://qianduan.guru/"
+        title: "技术小黑屋",
+        href: "http://droidyue.com/ninki/"
     },{
         title: "stormzhang",
         href: "http://stormzhang.com/"
@@ -94,17 +94,20 @@ friends: [
         title: "刘未鹏 | MIND HACKS",
         href: "http://mindhacks.cn/"
     },{
+        title: "尹峰以为",
+        href: "http://ingf.github.io/"
+    },{
         title: "SmdCn's Blog",
         href: "http://blog.smdcn.net"
     },{
         title: "DHong Say",
         href: "http://dhong.co"
     },{
-        title: "尹峰以为",
-        href: "http://ingf.github.io/"
-    },{
         title: "Seaborn Lee",
         href: "http://seabornlee.cn/"
+    },{
+        title: "Derek Sivers",
+        href: "http://sivers.org/"
     },{
         title: "五道口摩羯宅男",
         href: "http://hujiaweibujidao.github.io/"
