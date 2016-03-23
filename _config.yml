@@ -83,7 +83,7 @@ featured-condition-size: 1              # A tag will be featured if the size of 
 friends: [
     {
         title: "技术小黑屋",
-        href: "http://droidyue.com/ninki/"
+        href: "http://droidyue.com/"
     },{
         title: "stormzhang",
         href: "http://stormzhang.com/"

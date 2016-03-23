@@ -56,7 +56,7 @@ Hey! Blog 就这么开通了。
 
 配置的过程中也没遇到什么坑，基本就是 Git 的流程，可以说相当顺手啦（然而并不..）
 
-大的 Jekyll 主题上直接 fork 了 Clean Blog（这个主题也相当有名，就不多赘述了。唯一的缺点大概就是没有标签支持，于是我给它补上了。）
+大的 Jekyll 主题上直接 fork 了 Clean Blog（这个主题也相当有名，就不多赘述了。唯一的缺点大概就是没有标签支持。）
 
 本地调试环境需要 `gem install jekyll`，结果 rubygem 的源居然被墙了……后来手动改成了我大Ryby的镜像站点 （ruby-china.org/）
 
@@ -69,7 +69,7 @@ Theme 的 CSS 是基于 Bootstrap 定制的，看得不爽的地方直接在 Les
 
 ## 后记
 
-回顾这个博客的诞生，纯粹是出于个人兴趣。在知乎相关问题上回答并获得一定的 star 后，[Hux](https://github.com/Huxpro/huxpro.github.io)决定把这个博客主题当作一个小小的开源项目来维护。
+回顾这个博客的诞生，纯粹是出于个人兴趣。在知乎相关问题上[Hux](https://github.com/Huxpro/huxpro.github.io)回答决定把这个博客主题当作一个小小的开源项目来维护。
 
 在经历 v1.0 - v1.5 的蜕变后，这个博客主题愈发完整，不但增加了诸多 UI 层的优化（opinionated）；在代码层面，更加丰富的配置项也使得这个主题拥有了更好的灵活性与可拓展性。而作为一个开源项目，我也积极的为其完善文档与解决 issue。
 
@@ -77,7 +77,7 @@ Theme 的 CSS 是基于 Bootstrap 定制的，看得不爽的地方直接在 Les
  
 ---
 
- —— Rya 记于 2016.03  
+ —— [Rya](https://github.com/RyanYans) 记于 2016.03  
  —— view by [Hux](https://github.com/Huxpro)  
 
 ---
