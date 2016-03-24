@@ -18,10 +18,9 @@ tags:
 
 ## 开始我的Git之旅
 
-* Git是什么？
- 
+* Git是什么？  
  	Git是目前世界上最先进的分布式版本控制系统（没有之一）。  
- 
+
 * Git有什么特点？ 
  
 	\# 用Git管理文件的话，更新的历史会保存在Git，所以不需要备份文件啦。非常方便吧！  
@@ -93,7 +92,7 @@ tags:
 酱紫就把项目上传至线上仓库(Github)啦！~很方便吧。  
 还有很多细节好玩的东西等你去挖掘，我在这就不多说了。
 
-###### 附上Github 简明教程：http://www.w3cschool.cc/w3cnote/git-guide.html
+###### 附上Github 简明教程：[Git - w3cschool](http://www.w3cschool.cc/w3cnote/git-guide.html)
 
 ********************  
 
