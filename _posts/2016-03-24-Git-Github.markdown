@@ -34,9 +34,11 @@ tags:
 使用Git前，需要先建立一个仓库(repository)。您可以使用一个已经存在的目录作为Git仓库或创建一个空目录。使用您当前目录作为Git仓库，我们只需使它初始化：
 
 	 $ git init
+
 或者先转到要存放的目录：
 
 	$ git init ./newrepo
+
 从现在开始，我们将假设您在Git仓库根目录下，除非另有说明。
 
 
@@ -55,6 +57,7 @@ tags:
 #### * 提交版本
 
 	 $ git commit -m "Adding files because..."
+
 -m 后面来让你写自己的版本注释信息。（强烈建议大家都写上，因为输入说明对自己对别人阅读都很重要！）
 
 ### 2. Git与Github协作
@@ -64,12 +67,14 @@ tags:
 	2. 设置SSH Key:  
 
 			$ ssh-keygen -t rsa -C "your_email@example.com"  
+
 遇到提示按回车，接着输入密码...  
 然后就会看到fingerprint值和一只<草泥马(忘了是羊还是马勒)>
 
 		接着输入：  
 
 				$ cat ~/.ssh/id_rsa.pub
+
 按下回车！就会看到公开密钥内容。整体复制到github的setting—SSH Keys上。
 
 	3. 在github上创建版本New repository:  
@@ -93,6 +98,7 @@ tags:
 ###### 附上Github 简明教程：http://www.w3cschool.cc/w3cnote/git-guide.html
 
 ********************  
+
 ### Git基本常用命令如下：
 
 * mkdir：         XX (创建一个空目录 XX指目录名)
@@ -159,4 +165,5 @@ tags:
 
 
 ---
+
 ---
