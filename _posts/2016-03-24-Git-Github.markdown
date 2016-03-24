@@ -4,7 +4,7 @@ title:      "菜鸟谈谈 Git & Github!"
 subtitle:   " \"快速了解Github,使用git进行简单操作。\""
 date:       2016-03-24 00:30:00
 author:     "RyanYans"
-header-img: "img/post-bg-2016.jpg"
+header-img: "img/post-bg-git.jpg"
 catalog: true
 tags:
     - Git
