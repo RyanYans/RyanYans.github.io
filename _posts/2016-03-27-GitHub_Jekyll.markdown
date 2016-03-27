@@ -43,7 +43,7 @@ tags:
 * 已经安装 Git 
 
 ### 1.建立一个项目
-![Chekout](http://img1.tuicool.com/vaEvum.jpg!web)	
+![Chekout](http://www.hacke2.cn/images/article/2014-11-11/3.jpg)	
 * 先在GitHub创建一个项目，名字写你注册时的用户名，尽量全部小写字母，避免随后会碰到的URL冲突问题
 
 * 本地运行Git，随意选个目录，将刚才创建的项目clone下来
