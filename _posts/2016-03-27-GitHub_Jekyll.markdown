@@ -4,7 +4,7 @@ title:      "利用GitHub&Jekyll建立个人博客"
 subtitle:   " \"快速搭建属于你自己的Blog。\""
 date:       2016-03-27 12:30:00
 author:     "RyanYans"
-header-img: "img/Githubpage.jpg.jpg"
+header-img: "img/Githubpage.jpg"
 catalog: true
 tags:
     - Jekyll
