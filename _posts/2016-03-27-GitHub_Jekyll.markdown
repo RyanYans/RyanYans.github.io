@@ -20,8 +20,9 @@ tags:
 ![GithubPage](http://i9.qhimg.com/t018049f9215df32183.jpg)
 
 
-## 一、为什么在GitHub上托管个人博客  
-###### Github很好的将代码和社区联系在了一起，于是发生了很多有趣的事情，世界也因为他美好了一点点。Github作为现在最流行的代码仓库，已经得到很多大公司和项目的青睐，比如jQuery、Twitter等。为使项目更方便的被人理解，介绍页面少不了，甚至会需要完整的文档站，Github替你想到了这一点，他提供了Github Pages的服务，不仅可以方便的为项目建立介绍站点，也可以用来建立个人博客。
+## 一、为什么在GitHub上托管个人博客
+  
+* Github很好的将代码和社区联系在了一起，于是发生了很多有趣的事情，**世界也因为他美好了一点点**。Github作为现在最流行的代码仓库，已经得到很多大公司和项目的青睐，比如jQuery、Twitter等。为使项目更方便的被人理解，介绍页面少不了，甚至会需要完整的文档站，Github替你想到了这一点，他提供了Github Pages的服务，不仅可以方便的为项目建立介绍站点，也可以用来建立个人博客。
 
 
 ### Github Pages有以下几个优点：
@@ -42,7 +43,7 @@ tags:
 * 已经安装 Git 
 
 ### 1.建立一个项目
-![Github之旅](http://img1.tuicool.com/vaEvum.jpg!web)
+![Chekout](http://img1.tuicool.com/vaEvum.jpg!web)	
 * 先在GitHub创建一个项目，名字写你注册时的用户名，尽量全部小写字母，避免随后会碰到的URL冲突问题
 
 * 本地运行Git，随意选个目录，将刚才创建的项目clone下来
@@ -97,7 +98,8 @@ tags:
 		title: Hello, My Blog
 		---
 
-		{{ page.title }}  
+		\{{ page.title }}  
+
 先不用急着奇怪为什么一个html文件会出现”{}“这样的标签，这里使用的是 Liquid 模板语言 ，{{ page.title }} 表示“本页面的标题”，更详细的介绍我们以后再讲，不妨这样理解：
 
 	#--- begin of page's head
@@ -105,6 +107,7 @@ tags:
 	#--- end of page's head
 
 	print(page.title)
+
 OK，那么博客主页设计完毕！（别吵…我答应过你要快速搭建完成的…先弄个毛胚房意思意思，美化啊功能啊什么的晚点再说嘛。。）  
 
 ### 5.发布到GitHub
@@ -117,7 +120,7 @@ OK，那么博客主页设计完毕！（别吵…我答应过你要快速搭建
 
 ---  **另外，如果不幸发现你的中文页面出现了乱码的情况，别着急，还是该死的UTF-8问题，后面我们会一劳永逸的解决他的，暂时先手动调整一下浏览器的编码。**
 
-### 5.在_posts内撰写文章
+### 6.在_posts内撰写文章
 
 在这段时间里，我们继续为你的博客添砖加瓦，让他拥有最基本的文章阅读功能，另外不断F5页面的同时也可以关注一下自己在GitHub注册时所用的邮箱，如果之前推送的内容有误的话，GitHub将以邮件形式提醒你生成失败。
 
@@ -167,15 +170,15 @@ OK，那么第一篇文章也写好了，再把最新的repo推送到github，�
 	title: My Blog
 	---
 	
-	{{ page.title }}
+	{{ \page.title }}
 	
 	{% for post in site.posts %}
 	
-	{{ post.date|date_to_string }} <a href='{{ site.baseurl }}{{ post.url }}'>{{ post.title }}</a>
+	{{ \post.date|date_to_string }} <a href='{{ \site.baseurl }}{{ \post.url }}'>{{ \post.title }}</a>
 	
 	{% endfor %}
 
-### 6.增加模板套装_layouts
+### 7.增加模板套装_layouts
 很抱歉我欺骗了你，这已经超出快速的范围了，可能有很多人已经坚持不到这步了。。不过至少我们进展很快～接下来——如果你仍有兴趣的话，让我们为网站增加一些统一性的风格设置。
 
 回到项目根目录，新建文件夹 _layouts，顾名思义，“布局”是也。在 _layouts 中新建一个最基本的布局文件，姑且命名为default.html好了（记得首先解决了UTF-8的编码问题哦）：  
@@ -184,7 +187,7 @@ OK，那么第一篇文章也写好了，再把最新的repo推送到github，�
 	<html>
 	    <head>
 	      <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-	      <title>{{ page.title }}</title>
+	      <title>{{ \page.title }}</title>
 	    </head>
 	    <body>
 	
@@ -208,4 +211,4 @@ OK，那么第一篇文章也写好了，再把最新的repo推送到github，�
 
 **到此为止，基本的步骤和项目结构已经全部讲完了，祝你能折腾愉快！**
 
-###### 多谢大家的耐心观看，如果有任何的意见或疑问，请直接在下方留言，或是通过页面右上角的图标与我联系。下次再见～
+###### 多谢大家的耐心观看，如果有任何的意见或疑问，请直接在下方留言，或是通过页面点击我的社交图标与我联系。下次再见～
