@@ -1,7 +1,7 @@
 ---
 layout:     post
 title:      "La famille Bélier"
-subtitle:   " \"贝利叶一家 - 推荐一部法国电影\""
+subtitle:   " \"推荐电影 - 贝利叶一家\""
 date:       2016-04-02 00:30:00
 author:     "RyanYans"
 header-img: "img/post-bg-family.jpg"
@@ -12,7 +12,7 @@ tags:
     - family
 ---
 
-##推荐给大家 -- La famille Bélier 
+## 推荐给大家 -- La famille Bélier 
 
 > Dans la famille Bélier, tout le monde est sourd sauf Paula, 16 ans. Elle est une interprète indispensable à ses parents au quotidien, notamment pour l’exploitation de la ferme familiale. Un jour, poussée par son professeur de musique qui lui a découvert un don pour le chant, elle décide de préparer le concours de Radio France. Un choix de vie qui signifierait pour elle l’éloignement de sa famille et un passage inévitable à l’âge adulte.  
 
