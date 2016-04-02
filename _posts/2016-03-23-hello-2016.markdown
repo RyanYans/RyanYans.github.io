@@ -69,15 +69,15 @@ Theme 的 CSS 是基于 Bootstrap 定制的，看得不爽的地方直接在 Les
 
 ## 后记
 
-* 回顾这个博客的诞生，纯粹是出于个人兴趣。在知乎相关问题上[Hux](https://github.com/Huxpro/huxpro.github.io)回答决定把这个博客主题当作一个小小的开源项目来维护。
+* 回顾这个博客的诞生，纯粹是出于个人兴趣。
 
 * 如果你恰好逛到了这里，希望你也能喜欢这个博客主题。 
 
-<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="http://music.163.com/outchain/player?type=2&id=28248872&auto=1&height=66"></iframe>
+<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="330" height="86" src="http://music.163.com/outchain/player?type=2&id=28248872&auto=1&height=66"></iframe>
 
 ---
 
- —— [Rya](https://github.com/RyanYans) 记于 2016.03  
+ —— [Rya](https://github.com/RyanYans) 于 2016.03  
  —— view by [Hux](https://github.com/Huxpro)  
 
 ---
