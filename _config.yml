@@ -3,8 +3,8 @@ title: Ryan Yans
 SEOTitle: 柏宁的博客 | RyanYans
 header-img: img/home-bg.jpg
 email: huxpro@gmail.com
-description: "关于前端、后端与设计、折腾家 | 柏宁，Web & Mobile Lover，Front-End Engineer，UX Designer | 这里是 @Rya柏宁 的个人博客，与你一起发现更大的世界。"
-keyword: "柏宁, Rya柏宁, RyanYans, 博客, 个人网站, 互联网, 前端, 后端 ，设计, 产品"
+description: "袁柏宁, 关于前端、后端与设计、折腾家 | 柏宁，Web & Mobile Lover，Front-End Engineer，UX Designer | 这里是 @Rya柏宁 的个人博客，与你一起发现更大的世界。"
+keyword: "袁柏宁, 柏宁, Rya柏宁, RyanYans, 博客, 个人网站, 互联网, 前端, 后端 ，设计, 产品"
 url: "http://ryanyans.github.io/"              # your host, for absolute URL
 baseurl: "http://ryanyans.github.io/"                             # for example, '/blog' if your blog hosted on 'host/blog'
 
