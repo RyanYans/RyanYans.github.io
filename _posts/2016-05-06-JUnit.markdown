@@ -18,7 +18,7 @@ tags:
   
 ## junit是什么？
 
-	JUnit是一个Java语言的单元测试框架。它由Kent Beck和Erich Gamma建立。多数Java的开发环境都已经集成了JUnit作为单元测试的工具。  来自JUnit的体验对测试驱动开发是很重要的，所以一些 JUnit知识经常 和测试驱动开发的讨论融合在一起。可以参考Kent Beck的 《Test-Driven Development: By Example》一书（有中文版和影印版）。
+JUnit是一个Java语言的单元测试框架。它由Kent Beck和Erich Gamma建立。多数Java的开发环境都已经集成了JUnit作为单元测试的工具。  来自JUnit的体验对测试驱动开发是很重要的，所以一些 JUnit知识经常 和测试驱动开发的讨论融合在一起。可以参考Kent Beck的 《Test-Driven Development: By Example》一书（有中文版和影印版）。
 
  
 * junit(4.0)有什么特点？
