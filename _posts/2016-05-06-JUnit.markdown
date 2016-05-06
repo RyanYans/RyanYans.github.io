@@ -23,12 +23,12 @@ JUnit是一个Java语言的单元测试框架。它由Kent Beck和Erich Gamma建
  
 * junit(4.0)有什么特点？
 
- 	>
+ 	
  	* 方法都是public的  
  	* 方法都没有返回值  
  	* 方法都没有参数  
  	* 方法都有@Test注解
-	<  
+	
 
 Unit 4.0 的"Hello world" ：
 		
