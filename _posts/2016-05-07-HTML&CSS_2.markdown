@@ -323,7 +323,7 @@ tags:
 
 
 * 导入方式：  
-	1.内联样式  
+1.内联样式  
 
 		<body>
 			<!-- 
@@ -338,7 +338,7 @@ tags:
 				hello css
 			</div>
 		</body>
-	2.内部样式  
+2.内部样式  
 
 		<!-- 
 			css导入方式2：
@@ -360,7 +360,7 @@ tags:
 				}
 				</style>
 		</head>
-	3.外部样式
+3.外部样式
 
 		<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -392,10 +392,11 @@ tags:
 		}
   
   
-###### 附上 HTML&CSS 简明参考书(神器)：http://www.w3school.com.cn/  
+###### 附上 HTML&CSS 简明工具书(神器)：http://www.w3school.com.cn/  
 
 --------------------------
 
- ·· 生命在于折腾 ··
+
+> > ·· 生命在于折腾 ··
 
 --------------------------
