@@ -1,0 +1,401 @@
+---
+layout:     post
+title:      "Java Web开发之 - HTML & CSS"
+subtitle:   " \"HTML & CSS 代码笔记\""
+date:       2016-05-07 00:32:00
+author:     "RyanYans"
+header-img: "img/post-bg-htmlcss.jpg"
+catalog: true
+tags:
+    - HTML
+    - CSS
+    - Java Web
+---
+# Java Web开发之 - HTML & CSS
+ 
+> 代码笔记，笔记代码。
+
+### 静态资源技术：  
+* html：页面展示  
+* css：样式控制和页面布局  
+* JavaScript：让页面动起来(表单即时验证)  
+
+
+### 1. html: Hyper Text Markup Language  超文本标记语言  
+* 概念：  
+		1. 超文本：使用超链接将网络上资源整合起来，形成网状结构  
+		2. 标记语言：使用标记(标签)构成的语言 。 如： <标记名称>，标记语言不是编程语言  
+
+### 2. html快速入门：
+	<!--
+	1.创建一个文档，修改文档的后缀名为 html 或者 htm。
+	2.使用文本编辑器打开该文档。
+	3.书写html标签
+	-->
+		<html>
+			<head>
+				<title>one html</title>
+			</head>
+			
+			<body>
+				<font color='red'>Hello HTML!</font>
+			</body>
+		</html>
+
+### 3. html语法：
+* html文档的后缀名是 html 或者 htm  
+* 标签一般都是成对出现，有开始标签<标签名称> 和 结束标签 `</标签名称>`  
+* 开始标签中可以定义属性，属性值建议使用引号(单双都可)引起来  
+* html标签的分类：  
+	- 围堵标签：有开始和结束标签  
+	- 自闭和标签：开始标签和结束标签在一起。  如 `<hr/>`  
+* html标签名称不区分大小写。但是建议都使用小写。  
+* 标签可以嵌套，但是需要正确的嵌套  如： `<a><b> </b></a> `  不正确嵌套 `<a><b> </a></b>`  
+
+### 4. html常用标签：  
+* 文件标签  
+
+		<body bgcolor="#FF00FF">
+			<!--
+				文件标签：构成html文档的最基本的标签  
+					html：声明该文档是一个html文档的标签，是html 文档的根标签  
+					head：头标签，内部可以定义加载一些信息  
+					title:标题标签。定义标题的  
+					body：体标签，代表页面体。  
+						* 属性：  
+							bgcolor：背景色  
+					
+					* 在html中属性颜色的取值：  
+						1.使用英文单词代表对应的颜色。如：red，green bule black pink yellow
+						2.rbg(值1，值2，值3)：值1,2,3， 取值范围 0~255
+						3.#值1值2值3： 值1值2值3的取值范围在 00~FF之间 如 #FF00FF
+			  -->
+		
+			hello  HTML ！
+		</body>  
+
+* 排版标签  
+
+		 <a name="top"></a>
+				静夜思<br/>
+				李白<br/>
+			床前明月光，疑是地上霜。<br/>
+			举头望明月，低头思故乡。<br/>
+		<p>
+
+		h1>xxxx关系系统</h1>
+		<h6>xxxx关系系统</h6>
+* 块标签  
+
+	`<div>aa<span>bbb</span>aa</div>`
+* 清单标签  
+
+		<ul>
+			<li>篮球</li>
+			<li>游戏</li>
+			<li>逛街</li>
+			<li>Java</li>
+		</ul>
+		
+		<ol>
+			<li>篮球</li>
+			<li>游戏</li>
+			<li>逛街</li>
+			<li>Java</li>
+		</ol>
+		
+		<dl>
+			<dt>爱好</dt>
+			<dd>篮球</dd>
+			<dd>足球</dd>
+			<dd>排球</dd>
+			<dd>乒乓球</dd>
+		</dl>
+* 图形标签  
+
+		<img src="b.jpg" alt="这是一朵荷花"/>
+		<a href="#top">回到顶部</a>
+* 链接标签(imp)  
+
+		<body>
+			<!--
+				链接标签：超链接
+					<a>:
+					* href:指定超链接的url(统一资源定位符)
+						协议名称：// 协议内容
+						http
+						ftp
+						mailto://chenchanghong@itcast.cn
+						thunder://678678EA44
+					* target:指定打开资源的方式
+						* _self:默认值，在本页面打开
+						* _blank:在空白页面打开
+						
+					* name:定义锚点
+			  -->
+			<a href="http://www.baidu.com" target="_blank">百度一下</a>
+			<a href="mailto://chenchanghong@itcast.cn">联系我们</a>
+		</body>
+* 表格标签(imp)  
+
+		<body >
+			<!--
+				表格标签：定义表格
+					table:定义一个表格
+						align:用与定义表格的对齐方式
+						bgcolor:背景色
+						border:边框
+						width:表格宽度
+	
+					tr:定义一行
+						
+					td:定义单元格
+						colspan:合并列
+						rowspan:合并行
+					th:定义标题单元格 居中并加粗
+					caption:表格标题
+			  -->
+			<table border="1" align="center" width="500px" bgcolor="pink">
+				<tr  align="center">
+					
+					<td colspan="2">年龄</td>
+					<td>成绩</td>
+				</tr>
+				<tr  align="center">
+					<td>张三</td>
+					<td>2</td>
+					<td>93</td>
+				</tr>
+				<tr  align="center">
+					<td>李四</td>
+					<td>24</td>
+					<td rowspan="2">94</td>
+				</tr>
+				<tr  align="center">
+					<td>王五</td>
+					<td>25</td>
+				</tr>
+			</table>
+		</body>
+* Form标签(imp!)  
+
+		<body>
+		<!-- 
+			表单标签：
+				* 表单：可以接受用户的输入，并且将输入的信息提交到后台服务器端。
+				<form>:
+					* 一个表单要想成功的提交，必须指定表单标签的 action属性和表单项的name属性
+						* action属性：用于指定表单数据提交的URL
+						* 表单项的name属性：给每一个想要成功提交的表单项指定name属性。
+							然后提交后会和该表单项的值拼接成一个键值对提交  如 ： usernam=aaa
+					* 表单提交方式：method属性来指定
+						get：默认值。表单参数会跟在url后边。 url大小有限制，一般小于1KB
+						post：表单参数不会在url后边，会在请求消息体中 。url无大小限制
+				表单项标签：
+					
+					
+		 -->
+		 
+		 <form action="#" method="get">
+		 	用户名：<input type="text" name="username"  value=""/><br/>
+		 	密码：<input type="password" name="password"  value=""/><br/>
+		 	性别： <input type="radio" name ="gender" value="male"/> 男
+		 		<input type="radio" name ="gender" value="female"/> 女
+		 	<br/>
+		 	爱好：
+		 		抽烟 <input type="checkbox" name="hobby" value="1"/>
+		 		逛街 <input type="checkbox" name="hobby" value="2"/>
+		 		游戏 <input type="checkbox" name="hobby" value="3"/>
+		 		Java <input type="checkbox" name="hobby" value="4"/>
+		 	<br/> 
+		 	学历：
+				<select name="edu">
+					<option>请选择学历</option>
+					<option value="gz">高中</option>
+					<option value="cz">初中</option>
+					<option value="xx">小学</option>
+					<option value="yey">幼儿园</option>
+				</select>	 	
+		 	<br/>
+		 	上传照片：<input type="file" name="ph" /><br/>
+		 	自我介绍：<textarea rows="9" cols="50" name="desc">请输入自我描述...</textarea>   <br/>
+		 	
+		 	
+		 	<input type="submit" value="提交" />
+		 	<input type="button" value="一个按钮" />
+		 	<input type="reset" value="重置按钮" /><br>
+		 	<input type="image" src="regist.bmp">
+		 	
+		 	<input type="hidden" name="id" value="007" />
+		 </form>
+* Input种类(imp!)  
+* 
+		<!--
+			<input>:
+				* type:用于指定input的样式
+					* text:默认值。文本输入框
+						* value：默认值
+					* password:密码输入框
+						* value：默认值
+					* radio:单选框
+						* 单选框要想单选，那么多个radio之间的name属性值 必须一致
+						* 单选框要想提交后 能够被服务端成功解析，需要指定value属性
+					* checkbox:复选框
+					* file:文件上传
+					* button：按钮
+					* submit：提交按钮
+					* reset：重置按钮 重置到页面加载成功后的样子
+					* image：提交表单的图片
+					* hidden：隐藏域。不显示，但是可以被提交
+					
+					
+			<select>:定义下拉列表
+				* 子标签：
+					<option>:定义下拉列表的项
+			<textarea>:文本域。
+				* 默认值在标签体中指定文本内容即可
+		-->
+		<input type="submit" value="提交" />
+	 	<input type="button" value="一个按钮" />
+	 	<input type="reset" value="重置按钮" /><br>
+	 	<input type="image" src="regist.bmp">
+	 	
+	 	<input type="hidden" name="id" value="007" />
+
+
+* Select与option标签(imp!)  
+	
+		<!--
+			<select>:定义下拉列表
+						* 子标签：
+							<option>:定义下拉列表的项
+					<textarea>:文本域。
+						* 默认值在标签体中指定文本内容即可
+		 -->
+
+		学历：
+			<select name="edu">
+				<option>请选择学历</option>
+				<option value="gz">高中</option>
+				<option value="cz">初中</option>
+				<option value="xx">小学</option>
+				<option value="yey">幼儿园</option>
+			</select>	 	
+	 	<br/>
+		 	上传照片：<input type="file" name="ph" /><br/>
+		 	
+
+* Textarea标签(imp)  
+		
+		<!--
+			<textarea>:文本域。
+				* 默认值在标签体中指定文本内容即可
+		-->	
+
+		自我介绍：<textarea rows="9" cols="50" name="desc">请输入自我描述...</textarea>   <br/>
+
+* 框架标签  
+
+		<frameset rows="20%,*">
+			<frame src="top.html"/>
+			<frameset cols="23%,*">
+				<frame src="left.html"/>
+				<frame name="body"/>
+			</frameset>
+		</frameset>	
+* 其它标签与特殊字符  
+
+		<meta...  
+		&nbsp  -- 空格
+		&It	  -- <
+		&gt   -- >
+		......
+
+## CSS: Cascading Style Sheet 层叠样式表
+* 概念：	  
+	* 层叠：多个css可以控制同一个标签。  
+	
+* 优点：  
+	1. 使用css可以将样式和页面布局和页面展示分离开。降低了耦合性  
+	2. 利于维护。  
+	3. 提交扩展性和可重用性  
+	4. 提交开发效率  
+
+
+* 导入方式：  
+	1.内联样式  
+
+		<body>
+			<!-- 
+				css导入方式1：
+					内联样式:在标签中加入属性 style.属性值为 css代码
+						如：<div style="color:red;">
+			 -->
+			<div style="color:red;">
+				hello css
+			</div>
+			<div>
+				hello css
+			</div>
+		</body>
+	2.内部样式  
+
+		<!-- 
+			css导入方式2：
+				内部样式:在html页面中的head标签内定义  <style>,在<style>标签体中书写css代码
+					css的书写格式：
+						选择器{
+							属性名1：属性值1;
+							属性名2：属性值2;
+							...
+						}
+						
+		 -->
+		<head>
+			<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+			<title>Insert title here</title>
+				<style type="text/css">
+				div{
+					color:red;
+				}
+				</style>
+		</head>
+	3.外部样式
+
+		<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title>Insert title here</title>
+		<link rel="stylesheet" type="text/css" href="a.css">
+		</head>
+		<body>
+			<!-- 
+				css导入方式3：
+					外部样式:在html页面中的head标签内定义  <link>,在<link>标签中引入css外部文件
+						
+			 -->
+		......
+		</body>
+	
+* 语法： 
+ 
+		<!--
+			选择器{  
+				属性名1：属性值1;  
+				属性名2：属性值2;  
+				属性名3：属性值3;  
+				....  
+			}
+		-->
+		div{
+			color:yellow;
+			....
+		}
+  
+  
+###### 附上 HTML&CSS 简明参考书(神器)：http://www.w3school.com.cn/  
+
+--------------------------
+
+ ·· 生命在于折腾 ··
+
+--------------------------
