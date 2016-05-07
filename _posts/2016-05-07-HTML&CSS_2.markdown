@@ -337,7 +337,8 @@ tags:
 			<div>
 				hello css
 			</div>
-		</body>
+		</body>  
+
 2.内部样式  
 
 		<!-- 
@@ -359,7 +360,8 @@ tags:
 					color:red;
 				}
 				</style>
-		</head>
+		</head>  
+
 3.外部样式
 
 		<head>
