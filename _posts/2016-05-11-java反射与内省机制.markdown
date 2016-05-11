@@ -4,7 +4,7 @@ title:      "Java的反射与内省机制"
 subtitle:   " \"JAVA的内省机制（introspector）与反射机制（reflection）...\""
 date:       2016-05-11 00:30:00
 author:     "RyanYans"
-header-img: "img/post-bg-junit.jpg"
+header-img: "img/post-bg-reflect.jpg"
 catalog: true
 tags:
     - 反射机制
@@ -21,16 +21,17 @@ tags:
 
  反射就是在运行状态把 JAVA  类中的各种成分映射成相应相应的 JAVA  类，可以动态得获取所有的属性以及动态调用任意一个方法。
 
-* 一段java代码在程序的运行期间会经历三个阶段： source-->class-->runtime  
+*一段java代码在程序的运行期间会经历三个阶段： source-->class-->runtime  
  class对象  
 在java中用一个class对象来表示一个java类的class阶段class对象封装了一个  
-java类定义的成员变量、成员方法、构造方法、包名、类名等。  *
+java类定义的成员变量、成员方法、构造方法、包名、类名等。*
 
  
 * Java的内省是什么？  
 
- 通过反射的方式操作JavaBean的属性，jdk提供了PropertyDescription类来操作访问JavaBean的属性，Beantils工具基于此来实现。
+ 通过反射的方式操作JAVABEAN的属性，JDK提供了PROPERTYDESCRIPTION类来操作访问JAVABEAN的属性，BEANTILS工具基于此来实现。
 
+![内省111.PNG](https://ooo.0o0.ooo/2016/05/11/57333ea0afd6c.png)
 ----------
 
 ### 1. 反射入门
