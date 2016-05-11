@@ -1,0 +1,84 @@
+---
+layout:     post
+title:      "Java的反射与内省机制"
+subtitle:   " \"JAVA的内省机制（introspector）与反射机制（reflection）...\""
+date:       2016-05-11 00:30:00
+author:     "RyanYans"
+header-img: "img/post-bg-junit.jpg"
+catalog: true
+tags:
+    - 反射机制
+    - Java
+    - 内省机制
+---
+
+# Java的反射与内省机制
+> 
+> 如果有朋友长时间接触Java语言的话就可能会遇到这两个词：反射(Reflection)和内省(Introspector)，经常搞不清楚这到底是怎么回事，在什么场合下应用以及如何使用？今天把这
+> 二者放在一起介绍，因为它们二者是相辅相成的。
+
+* Java的反射是什么？  
+
+ 反射就是在运行状态把 JAVA  类中的各种成分映射成相应相应的 JAVA  类，可以动态得获取所有的属性以及动态调用任意一个方法。
+
+* 一段java代码在程序的运行期间会经历三个阶段： source-->class-->runtime  
+ class对象  
+在java中用一个class对象来表示一个java类的class阶段class对象封装了一个  
+java类定义的成员变量、成员方法、构造方法、包名、类名等。  *
+
+ 
+* Java的内省是什么？  
+
+ 通过反射的方式操作JavaBean的属性，jdk提供了PropertyDescription类来操作访问JavaBean的属性，Beantils工具基于此来实现。
+
+----------
+
+### 1. 反射入门
+
+* 1).获得java类的各个组成部分，首先需要获得代表java类的Class对象  
+   获得Class对象有以下三种方式：  
+        Class.forname(className)            用于做类加载
+        obj.getClass()                              用于获得对象的类型
+        类名.class                                    用于获得指定的类型，传参用
+* 2).反射类的构造方法，获得实例  
+		Class clazz = 类名.class;  
+		Constuctor con = clazz.getConstructor(new Class[]  {paramClazz1,paramClazz2,.....});  
+		con.newInstance(params....);  
+* 3).反射类的成员方法  
+	   Method m = clazz.getMethod(methodName,new Class[]  {paramClazz1,paramClazz2,.....});  
+	   m.invoke();  
+* 4).反射类的属性  
+	   Field field = clazz.getField(fieldName);  
+	   field.setAccessible(true);//设置为可访问  
+	   filed.setObject(value);           //设置值  
+	   Object value = field.get(clazz);       //获得值  
+	   Object staticValue = filed.get(Class);     //获得静态值  
+
+### 2. 内省入门  
+
+* 1).操作一个属性  
+           Object obj = new Object();  
+           PropertyDescriptor pd = new PropertyDescriptor  (propertyName,Class);        **//声明属性描述对象，一次只可描述一个属性**  
+           Method m = pd.getWriterMethod();  //获取setter方法  
+           m.invoke(obj,value);  
+           Method m = pd.getReaderMethod();  //获取getter方法  
+           Object value = m.invoke(obj);  
+* 2).操作多个属性  
+           BeanInfo bi = Instospector.getBeanInfo(beanClass);//获取Bean描述对象  
+           PropertyDescriptor[] pds = bi.getPropertyDescriptors();  //获取属性描述  对象数组  
+           · 拿到属性描述对象数组之后再循环数组，剩余的操作就跟"操作一个属性"相同了 ·
+
+----------
+
+### 两者区别	
+
+反射可以操作各种不同的java类，那么内省只是通过反射来操作JavaBean的。（内省机制通过反射来实现）
+
+### 应用
+
+* 框架就是将开发中大量重复的代码其中起来写个通用的程序，框架是给将来的程序使用的，需要现在的类调用将来的，所以框架要运行是依赖于将来的类实现的。  
+* 我们只需要针对接口进行调用，将来的类实现接口，那么方法就固定了。但是将来写的类的类名我们无从得知，这时就需要调用者通过配置文件告诉框架具体的类名。  
+
+* 将java的反射以及内省机制应用到程序设计中可以大大提高程序的智能化和可扩展性。有很多项目都是使用这两种技术实现其核心功能的。例如BeanUtils,Struts等。  
+
+--------------------------
