@@ -12,7 +12,8 @@ tags:
     - BOM
 ---
 
-#JavaScript:客户端脚本语言
+# JavaScript:客户端脚本语言  
+
 ###### 快速了解客户端脚本语言JavaScript...
 
 * js的发展史  
@@ -28,10 +29,10 @@ tags:
 •	核心（ECMAScript）   
 •	文档对象模型（DOM） Document object model(整合js和html和css)  
 •	浏览器对象模型（BOM） Broswer object model(整合js和浏览器)  
-•	Javascript 在开发中绝大多数情况是基于对象的.也是面向对象的.  
+•	Javascript 在开发中绝大多数情况是基于对象的.也是面向对象的.   
 
-
-** JavaScript = ECMAScript规范  + javascript自己的东西(BOM/DOM)**  
+** JavaScript = ECMAScript规范  + javascript自己的东西(BOM/DOM) **  
+![ECMAScript组成.png](https://ooo.0o0.ooo/2016/05/16/5739def535738.png)
 
 ----------
 
@@ -111,6 +112,6 @@ undefined：未定义类型   当初始化一个变量没有给该变量赋值�
 		Screen ：显示器屏幕对象  
 
 
-######附上Js 简明教程：http://www.w3school.com.cn/
+###### 附上Js 简明教程：http://www.w3school.com.cn/
 
 --------------------------
