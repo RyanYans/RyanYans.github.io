@@ -2,7 +2,7 @@
 layout:     post
 title:      "Java Web开发之 - JavaScript"
 subtitle:   " \"快速了解客户端脚本语言JavaScript\""
-date:       2016-05-016 00:32:00
+date:       2016-05-16 00:32:00
 author:     "RyanYans"
 header-img: "img/post-bg-js.jpg"
 catalog: true
