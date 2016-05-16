@@ -1,0 +1,116 @@
+---
+layout:     post
+title:      "Java Web开发之 - JavaScript"
+subtitle:   " \"快速了解客户端脚本语言JavaScript\""
+date:       2016-05-016 00:32:00
+author:     "RyanYans"
+header-img: "img/post-bg-js.jpg"
+catalog: true
+tags:
+    - JavaScript
+    - Java Web
+    - BOM
+---
+
+#JavaScript:客户端脚本语言
+###### 快速了解客户端脚本语言JavaScript...
+
+* js的发展史  
+
+	* 1992 ， nombas  c-- 第一门客户端脚本语言。用于表单验证   earthScript
+	* 网景，liveScript 后来找到 sun合作--->  JavaScript  -->js
+	* 微软   JScript -->js
+	* ECMA（欧洲计算机协会）   ECMAScript规范  
+
+* ECMAScript
+
+尽管 ECMAScript 是一个重要的标准，但它并不是 JavaScript 唯一的部分，当然，也不是唯一被标准化的部分。实际上，一个完整的 JavaScript 实现是由以下 3 个不同部分组成的：  
+•	核心（ECMAScript）   
+•	文档对象模型（DOM） Document object model(整合js和html和css)  
+•	浏览器对象模型（BOM） Broswer object model(整合js和浏览器)  
+•	Javascript 在开发中绝大多数情况是基于对象的.也是面向对象的.  
+
+
+** JavaScript = ECMAScript规范  + javascript自己的东西(BOM/DOM)**  
+
+----------
+
+### ECMAScript规范	  
+
+#### js的语法： 
+* js的数据类型  
+	Java中的基本数据类型:  
+		整型：		byte  short int long  
+		浮点型：    float double  
+		布尔型：    boolean  
+		字符型：    char  
+#### js中的原始数据类型：
+number：数字类型   包含整数、小数和 NaN(not a number)
+string：字符串类型  包含 字符串 和 字符
+boolean：布尔类型   true  和 false
+null：空类型   对象的占位符
+undefined：未定义类型   当初始化一个变量没有给该变量赋值，系统会自动赋值为undefined
+#### js的变量：
+* 定义变量：
+	* 使用var 关键字来定义变量 如 var a = 3;
+	* 不是用var    a = 3;  这种方式定义的变量是全局变量
+* js是一门弱类型语言
+	* 弱类型：在声明变量时，不需要指定数据类型。将来这个变量可以存储任意数据类型的数据
+	
+* 变量命名规范：和Java中一样
+
+* js代码每一行需要使用分号;结束。也可以不适用
+	* 写分号：分号就是一行代码的结束标识
+	* 不写分号：每一行代码的结束标识是 换行符
+#### typeof 关键字 来获取变量的数据类型  
+
+#### js的运算符
+* 一元运算符：
+	+ - ++ --
+	* ++ 在前 先+1 后运算，++ 在后 先运算 后+1
+* 比较运算符
+	> < >= <= == ===
+* 逻辑运算符：
+	&& || !
+* 算术运算符
+	+ - * / %
+* 赋值运算符
+	 =  += ...
+* 三元运算符
+   ?  :
+
+
+### js的基本对象:
+
+* js是一门基于对象的语言  
+		* 基于对象：不能够由原有的对象派生出新的对象。不存在继承。
+	
+		Object:
+		Function: 明天将
+		String / Number /Boolean	
+			* String:
+		Array: 数组对象
+		Date：日期对象
+		Math：数学对象
+			
+		Global：全局对象 定义了全局方法。使用时，直接调用方法即可。  方法名();
+		RegExp:正则对象
+			* 正则表达式：定义了字符串的组成规则
+
+### BOM：Browser Object Model 浏览器对象模型  
+
+* 将浏览器的各个部分都封装为对象  
+	* BOM的所有对象都是由浏览器js引擎创建的，我们只需要使用即可  
+	Window ：窗口对象
+		* 使用：
+				
+		History ：历史记录对象  
+		Location ：地址栏对象  
+		
+		Navigator ：浏览器对象  
+		Screen ：显示器屏幕对象  
+
+
+######附上Js 简明教程：http://www.w3school.com.cn/
+
+--------------------------
