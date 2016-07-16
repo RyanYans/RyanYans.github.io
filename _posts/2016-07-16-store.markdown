@@ -1,0 +1,193 @@
+---
+layout:     post
+title:      "【Android开发经验】APP的数据到底应该存在哪？"
+subtitle:   " \"APP的缓存文件到底应该存在哪？看完这篇文章你应该就自己清楚了！\""
+date:       2016-07-16 00:30:00
+author:     "RyanYans"
+header-img: "img/post-bg-store.jpg"
+catalog: true
+tags:
+    - Android
+    - Android存储结构
+---
+
+# APP的数据到底应该存在哪？  
+
+####### 只要是需要进行联网获取数据的APP，那么不管是版本更新，还是图片缓存，都会在本地产生缓存文件。那么，这些缓存文件到底放在什地方合适呢？系统有没有给我们提供建议的缓存位置呢？不同的缓存位置有什么不同呢？今天这篇文章就是主要来说明这个问题的。  
+
+首先，我们要知道，在Android手机里面，缓存的位置分为两类，一类是Internal Storage，即内部存储，另外一类是External Storage，即外部存储。比较老的手机，有一个手机内部存储，还有一个SD卡存储，就是分别对应这两种存储位置，因为以前的SD卡是可以扩展的，即可拆卸的，所以可以用是否可拆卸作为内外存储的分类标准。但是现在最新的设备，比如小米、锤子、华为等，都取消了可拆卸的SD卡，直接与机身焊接在一起，分为16G、32G版本，所以现在内外存储的分类不再以是否可拆卸作为标准，而是以下面的几方面作为新的标准：
+  
+##  内部存储：
+
+* 总是可用的  
+* 这里的文件默认是只能被你的app所访问的。  
+* 当用户卸载你的app的时候，系统会把internal里面的相关文件都清除干净。  
+* Internal是在你想确保不被用户与其他app所访问的最佳存储区域。 
+
+##1.  外部存储：
+
+* 并不总是可用的，因为用户可以选择把这部分作为USB存储模式，这样就不可以访问了。
+* 是大家都可以访问的，因此保存到这里的文件是失去访问控制权限的。
+*  当用户卸载你的app时，系统仅仅会删除external根目录（getExternalFilesDir()）下的相关文件。
+*  External是在你不需要严格的访问权限并且你希望这些文件能够被其他app所共享或者是允许用户通过电脑访问时的最佳存储区域。
+
+读取内部存储不需要权限，但是读取或者是写入外部存储需要权限，在现版本里面，读权限不进行声明，也可以实现读取，但是在以后版本可能会修改，所以请务必加上，如果应用需要写入权限，那么只声明写入权限即可，不需要再声明读取权限。
+
+下面分别说明如何获取内外存储的文件位置和区别。
+
+## 内部存储的方式：
+
+### 1.getFileDir() 通过此方法可以获取到你的APP内部存储的文件，路径为/data/data/pacgage_name/files  
+我们直接上代码进行测试：  
+
+	File file1 = new File(getFilesDir(), "getFilesDir.txt");  
+	    Log.d("TAG", "file1=" + file1.getAbsolutePath());  
+	
+	    try {  
+	        OutputStream outputStream1 = new FileOutputStream(file1);  
+	        outputStream1.write("file".getBytes());  
+	        outputStream1.close();  
+	    } catch (Exception e) {  
+	        e.printStackTrace();  
+	    }  
+
+运行结果如下：
+
+	`02-03 07:18:04.068  22237-22237/? D/TAG﹕  file1=/data/data/com.socks.baidudemo/files/getFilesDir.txt  `
+
+
+###   2.getCacheDir() 通过此方法可以获取到你的APP内部存储的文件，路径为/data/data/package_name/cache
+
+测试代码：
+
+	File file2 = new File(getCacheDir(), "cache.txt");  
+	        Log.d("TAG", "file2=" + file2.getAbsolutePath());  
+	        try {  
+	            OutputStream outputStream1 = new FileOutputStream(file2);  
+	            outputStream1.write("cache".getBytes());  
+	            outputStream1.close();  
+	        } catch (Exception e) {  
+	            e.printStackTrace();  
+	        }  
+
+运行结果如下：
+
+`02-03 07:19:31.508  23652-23652/? D/TAG﹕ file2=/data/data/com.socks.baidudemo/cache/cache.txt`  
+
+### 3.openFileOutput() 通过此方法，我们可以获取到一个输出流，输出流的保存路径是/data/data/package_name/files ，和getFileDir()的路径一致  
+
+测试代码如下：
+
+	try {  
+	            OutputStream outputStream = openFileOutput("openFileOutput.txt", MODE_PRIVATE);  
+	            outputStream.write("openFileOutput".getBytes());  
+	            outputStream.close();  
+	        } catch (Exception e) {  
+	            e.printStackTrace();  
+	        }  
+
+运行结果：  
+![1.png](https://ooo.0o0.ooo/2016/07/16/578a13c399572.png)
+
+- 你的app的internal storage 目录是以你的app的包名作为标识存放在Android文件系统的特定目录下[data/data/com.example.xx]。 从技术上讲，如果你设置文件为可读的，那么其他app就可以读取你的internal文件。然而，其他app需要知道你的包名与文件名。若是你没有设置为可读或者可写，其他app是没有办法读写的。因此只要你使用MODE_PRIVATE ，那么这些文件就不可能被其他app所访问。  
+- 另外记住一点，内部存储在你的APP卸载的时候，会一块被删除，因此，我们可以在cache目录里面放置我们的图片缓存，而且cache与files的差别在于，如果手机的内部存储控件不够了，会自行选择cache目录进行删除，因此，不要把重要的文件放在cache文件里面，可以放置在files里面，因为这个文件只有在APP被卸载的时候才会被删除。还有要注意的一点是，如果应用程序是更新操作，内部存储不会被删除，区别于被用户手动卸载。  
+
+
+## 外部存储的方式
+
+### 1.外部存储的状态  
+与内部存储不同，外部存储的容量一般较大，而且当移动设备连接到PC之后，如果我们开启USB模式与PC连接并操作文件，这个时候外部存储是处于卸载状态的，APP不能对里面的文件进行操作，所以，我们的APP的对外部存储进行操作之前，请先检查外部存储的状态。
+
+	 /* Checks if external storage is available for read and write */  
+	public boolean isExternalStorageWritable() {  
+	    String state = Environment.getExternalStorageState();  
+	    if (Environment.MEDIA_MOUNTED.equals(state)) {  
+	        return true;  
+	    }  
+	    return false;  
+	}  
+	  
+	/* Checks if external storage is available to at least read */  
+	public boolean isExternalStorageReadable() {  
+	    String state = Environment.getExternalStorageState();  
+	    if (Environment.MEDIA_MOUNTED.equals(state) ||  
+	        Environment.MEDIA_MOUNTED_READ_ONLY.equals(state)) {  
+	        return true;  
+	    }  
+	    return false;  
+	}  
+
+
+###  2.外部私有存储
+
+从上面内部存储的介绍来看，内部存储的文件应该属于私有文件，别的APP想要访问是比较困难的，那么外部存储呢？外部存储由于容量较大，一般是我们的APP保存较大文件的不二选择，那么是不是外部存储里面的文件，所有的APP都可以随意访问呢？显然并不是这样的，在外部存储中，也存在着私有文件的概念。  
+就像我们在前面获取内部存储的方法一样，我们使用Context.getExternalCacheDir()和Context.getExternalFilesDir()就可以获取到外部存储的私有文件，我们以下面的代码为例：
+
+	File file3 = new File(getExternalCacheDir().getAbsolutePath(), "getExternalCacheDir.txt");  
+	        try {  
+	            OutputStream outputStream1 = new FileOutputStream(file3);  
+	            outputStream1.write("getExternalCacheDir".getBytes());  
+	            outputStream1.close();  
+	        } catch (Exception e) {  
+	            e.printStackTrace();  
+	        }  
+	  
+	        Log.d("TAG", "file3=" + file3);  
+	  
+	        File file4 = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), "getExternalFilesDir.txt");  
+	        try {  
+	            OutputStream outputStream1 = new FileOutputStream(file4);  
+	            outputStream1.write("getExternalFilesDir".getBytes());  
+	            outputStream1.close();  
+	        } catch (Exception e) {  
+	            e.printStackTrace();  
+	        }  
+
+运行结果如下：
+
+	02-03 08:11:38.860    9096-9096/? D/TAG﹕ file3=/storage/emulated/0/Android/data/com.socks.baidudemo/cache/getExternalCacheDir.txt  
+	02-03 08:11:38.860    9096-9096/? D/TAG﹕ file4=/storage/emulated/0/Android/data/com.socks.baidudemo/files/Pictures/getExternalFilesDir.txt 
+
+在系统中得位置如下：  
+![2.png](https://ooo.0o0.ooo/2016/07/16/578a13c3d15ce.png)
+
+从上图可以看出，我们创建的私有文件的地址是/sdcard/Android/date/package_name下面，Android文件夹是隐藏文件夹，用户无法操作。
+如果我们想缓存图片等比较耗空间的文件，推荐放在getExternalCacheDir()所在的文件下面，这个文件和getCacheDir()很像，都可以放缓存文件，在APP被卸载的时候，都会被系统删除，而且缓存的内容对其他APP是相对私有的。
+但是，除此之外，还是有一些差别的：
+
+![3.png](https://ooo.0o0.ooo/2016/07/16/578a13c3c7368.png)
+
+Context.getExternalFilesDir()和Context.getFilesDir()也是有区别的，但是在应用卸载的时候，也是会被删除的。
+
+![4.png](https://ooo.0o0.ooo/2016/07/16/578a13c42406b.png)
+
+3.外部公共存储
+如果你的APP产生的文件不需要隐藏，即对用户是可见的，那么你可以把文件放在外部的公共存储文件下面。
+我们可以通过下面的代码获取到公共存储目录
+
+	Environment.getExternalStorageDirectory()  
+	  
+	Environment.getExternalStoragePublicDirectory()  
+
+
+这个方法不是Context的方法，而是Environment的两个方法，第一个方法获取到的其实是外部存储的根目录，而第二个方法获取到得则是外部存储的公共目录。其实在访问权限上是没有区别的，不同点是getExternalStoragePublicDirectory()在运行的时候，会需要你带有一个特定的参数来指定这些public的文件类型，以便于与其他public文件进行分类。参数类型包括DIRECTORY_MUSIC 或者 DIRECTORY_PICTURES. 如下:  
+	
+	public File getAlbumStorageDir(Context context, String albumName) {  
+	    // Get the directory for the app's private pictures directory.  
+	    File file = new File(context.getExternalFilesDir(  
+	            Environment.DIRECTORY_PICTURES), albumName);  
+	    if (!file.mkdirs()) {  
+	        Log.e(LOG_TAG, "Directory not created");  
+	    }  
+	    return file;  
+	}  
+
+不管你是使用 getExternalStoragePublicDirectory() 来存储可以共享的文件，还是使用 getExternalFilesDir() 来储存那些对与你的app来说是私有的文件，有一点很重要，那就是你要使用那些类似DIRECTORY_PICTURES 的API的常量。那些目录类型参数可以确保那些文件被系统正确的对待。例如，那些以DIRECTORY_RINGTONES 类型保存的文件就会被系统的media scanner认为是ringtone而不是音乐。  
+
+下面就是这些参数对应的文件夹：  
+![5.png](https://ooo.0o0.ooo/2016/07/16/578a13c41d0d9.png)
+
+
+----------
+
+之前一直对缓存文件夹乱糟糟的，经过这么已整理，感觉清楚了很多！
