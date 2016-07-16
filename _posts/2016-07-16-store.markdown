@@ -195,3 +195,7 @@ Context.getExternalFilesDir()和Context.getFilesDir()也是有区别的，但是
 ----------
 
 之前一直对缓存文件夹乱糟糟的，经过这么已整理，感觉清楚了很多！
+
+----------
+
+来源：http://blog.csdn.net/zhaokaiqiang1992/article
