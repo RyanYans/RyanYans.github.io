@@ -1,7 +1,7 @@
 ---
 layout:     post
 title:      "Hello 2016"
-subtitle:   " \"Hello World, Hello Blog\""
+subtitle:   " \"Hello World, Hello Blog, Hello Music!\""
 date:       2016-03-23 12:30:00
 author:     "RyanYans"
 header-img: "img/post-bg-2016.jpg"
@@ -34,7 +34,7 @@ Hey! Blog 就这么开通了。
 
 ## 正文
 
-接下来说说搭建这个博客的技术细节。  
+接下来说说搭建这个博客的细节。  
 
 正好之前就有关注过 [GitHub Pages](https://pages.github.com/) + [Jekyll](http://jekyllrb.com/) 快速 Building Blog 的技术方案，非常轻松时尚。
 
@@ -45,26 +45,6 @@ Hey! Blog 就这么开通了。
 * 利用 GitHub Pages 的域名和免费无限空间，不用自己折腾主机
 	* 如果需要自定义域名，也只需要简单改改 DNS 加个 CNAME 就好了 
 * Jekyll 的自定制非常容易，基本就是个模版引擎
-
-
-本来觉得最大的缺点可能是 GitHub 在国内访问起来太慢，所以第二天一起床就到 GitCafe(Chinese GitHub Copy) 迁移了一个[镜像](http://huxpro.gitcafe.io)出来，结果还是巨慢。
-
-哥哥可是个技术猿好嘛！ 果断开 Chrome DevTool 查了下网络请求，原来是 **pending 在了 Google Fonts** 上，页面渲染一直被阻塞到请求超时为止，难怪这么慢。  
-忍痛割爱，只好把 Web Fonts 去了（反正超时看到的也只能是 fallback ），果然一下就正常了，而且 GitHub 和 GitCafe 对比并没有感受到明显的速度差异，虽然 github 的 ping 值明显要高一些，达到了 300ms，于是用 DNSPOD 优化了一下速度。
-
----
-
-配置的过程中也没遇到什么坑，基本就是 Git 的流程，可以说相当顺手啦（然而并不..）
-
-大的 Jekyll 主题上直接 fork 了 Clean Blog（这个主题也相当有名，就不多赘述了。唯一的缺点大概就是没有标签支持。）
-
-本地调试环境需要 `gem install jekyll`，结果 rubygem 的源居然被墙了……后来手动改成了我大Ryby的镜像站点 （ruby-china.org/）
-
-Theme 的 CSS 是基于 Bootstrap 定制的，看得不爽的地方直接在 Less 里改就好了。
-
-最后就进入了耗时反而最长的**做图、写字**阶段，也算是进入了**写博客**的正轨，因为是类似 Hack Day 的方式去搭这个站的，所以折腾折腾着大半夜大半夜地就过去了。
-
-第二天考虑中文字体的渲染，fork 了 [Type is Beautiful](http://www.typeisbeautiful.com/) 的 `font` CSS，调整了字号，适配了 Win 的渣渲染，中英文混排效果好多了。
 
 
 ## 后记
