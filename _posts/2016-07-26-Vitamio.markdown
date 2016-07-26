@@ -1,0 +1,72 @@
+---
+layout:     post
+title:      "Android Studio导入Vitamio多媒体开发框架"
+subtitle:   " \"这篇笔记用于解决Android Studio导入Vitamio框架的问题...\""
+date:       2016-07-26 00:30:00
+author:     "RyanYans"
+header-img: "img/post-bg-vitamio.jpg"
+catalog: true
+tags:
+    - Android
+    - Vitamio
+    - 开源项目
+---
+
+# Android Studio导入Vitamio多媒体开发框架
+
+###### 这篇笔记用于解决Android Studio导入Vitamio框架的问题.官网给出的相关说明过于简单,故整理这篇文章,希望能帮助到像我一样遇到这个问题的朋友.
+###### 开发学习建议参考农民伯伯的博客中的系列文章,地址:http://www.cnblogs.com/over140/category/409230.html
+  
+### Step1 到官网或者github下载vitamio资源
+
+* 官网地址:https://www.vitamio.org/ (最新版本5.0.0,但是官网很难打开...)
+* github地址:https://github.com/yixia/VitamioBundle (版本4.2.2)
+
+ 
+### Step2 解压文件,将其中的vitamio导入到as中
+
+![Step2_0](http://images2015.cnblogs.com/blog/699960/201604/699960-20160407175554031-61566677.png)
+ 	
+其中的vitamio-sample是官方提供的demo,而我们要导入as的是vitamio.
+
+打开AS,File -> New -> Import Moudle,选择刚才解压文件夹下的 vitamio 文件.
+导入后的文件目录中会多出vitamin文件夹,如下图:
+
+![Step2_1](http://images2015.cnblogs.com/blog/699960/201604/699960-20160407194114375-1617353732.png)
+
+导入后一般会出现这个问题:
+
+![Step2_2](http://images2015.cnblogs.com/blog/699960/201604/699960-20160407175846328-869831002.png)
+
+解决方案单独写在step3中.-->
+
+### Step3 配置build.gradle
+
+* app目录下的build.gradle
+
+在 dependencies 中添加 compile project(':vitamio') 如果你导入module中更改过名字的话 要改成修改后的名字 如图：
+
+![Step3_0](http://images2015.cnblogs.com/blog/699960/201604/699960-20160407193230203-1270844943.png)
+
+* 按照app目录下的build.gradle配置vitamio目录下的build.gradle(注意不是vitamio文件夹下app下的)
+
+![Step3_1](http://images2015.cnblogs.com/blog/699960/201604/699960-20160407194357843-2041658812.png)
+
+再次等待gradle编译完成,应该就没有问题了.
+
+### Step4 打开app/src/main目录下的AndroidManifest.xml,注册io.vov.vitamio.activity.InitActivity
+	
+	<activity
+	    android:name="io.vov.vitamio.activity.InitActivity"
+	    android:configChanges="orientation|screenSize|smallestScreenSize|keyboard|keyboardHidden|navigation"
+	    android:launchMode="singleTop"
+	    android:theme="@android:style/Theme.NoTitleBar"
+	    android:windowSoftInputMode="stateAlwaysHidden" />
+
+以上过程一般在最新版本中已配置，不需要用户编写.
+
+至此,vitamio导入完毕.
+
+----------
+###### * 学习笔记，如有谬误，敬请指正 *
+
