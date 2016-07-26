@@ -15,6 +15,7 @@ tags:
 # Android Studio导入Vitamio多媒体开发框架
 
 ###### 这篇笔记用于解决Android Studio导入Vitamio框架的问题.官网给出的相关说明过于简单,故整理这篇文章,希望能帮助到像我一样遇到这个问题的朋友.
+
 ###### 开发学习建议参考农民伯伯的博客中的系列文章,地址:http://www.cnblogs.com/over140/category/409230.html
   
 ### Step1 到官网或者github下载vitamio资源
@@ -67,6 +68,6 @@ tags:
 
 至此,vitamio导入完毕.
 
-----------
+----------  
 ###### * 学习笔记，如有谬误，敬请指正 *
 
