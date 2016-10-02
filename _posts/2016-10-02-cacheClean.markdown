@@ -17,13 +17,13 @@ tags:
 
 本文讲述内容的完整代码实例见 https://github.com/mzlogin/CleanExpert。
 
-### 系统缓存的定义
+## 系统缓存的定义
 
 如下是我捏造的非官方定义：
 
 系统缓存： Android APP 在运行过程中保存在手机内置和外置存储上的缓存文件总和。
 
-### 系统缓存的组成
+## 系统缓存的组成
 
 先说结论：
 
@@ -41,7 +41,7 @@ tags:
 这里显示的大小是如何计算出来的，它实际上的文件组成是怎么样的呢？可以从 Android 系统自带的 Settings APP 的源码中找到答案。
 
 
-### 系统缓存大小的计算
+## 系统缓存大小的计算
 
 首先我们需要了解：
 
@@ -60,7 +60,7 @@ tags:
 
 既然直接计算文件夹大小的方法行不通了，那就仍然重复上面的故事，参考 Settings APP 的做法吧。
 
-#### Settings 计算缓存大小的方法
+### Settings 计算缓存大小的方法
 
 Settings APP 使用了 PackageManager.getPackageSizeInfo 方法来做此事，难道 so easy？屁颠屁颠去查了一下 Android API，发现 PacakgeManager 的文档中压根就没有出现 getPackageSizeInfo 的身影，好吧这是一个不对外公开的 API。
 
@@ -116,7 +116,7 @@ Settings APP 使用了 PackageManager.getPackageSizeInfo 方法来做此事，�
 
 2. 传给 getPackageSizeInfo 方法的第二个参数类型 IPackageStatsObserver 是在 android.content.pm 包下，需要自已通过 aidl 方式定义。
 
-#### 计算缓存大小的实现
+### 计算缓存大小的实现
 
 解决步骤：
 
@@ -283,11 +283,11 @@ Settings APP 使用了 PackageManager.getPackageSizeInfo 方法来做此事，�
 		    }
 
 
-### 系统缓存的清理
+## 系统缓存的清理
 
 既然借鉴 Settings APP 的做法如此好使，在做缓存清理时我们当然故伎重施。我们先来看看它是怎样清理某一个应用的缓存的。
 
-#### Settings 清理缓存的方法
+### Settings 清理缓存的方法
 
 在 InstalledAppDetails.java 里能根据名称找到对应「清除缓存」按钮相关的代码：
 
@@ -480,7 +480,7 @@ int free_cache(int64_t free_size)
 也就是说，freeStorageAndNotify 只是删除了「内部缓存」，扩展存储上的「外部缓存」需要我们另外处理。
 
 
-### 清理缓存的实现
+## 清理缓存的实现
 
 参考 frameworks/base/services/java/com/android/server/DeviceStorageMonitorService.java 中对 freeStorageAndNotify 的相关调用，最后我们的实现步骤如下：
 
@@ -552,7 +552,7 @@ int free_cache(int64_t free_size)
 
 **备注：** 经测试该方法在 Android 6.0 版本和部分 5.0+ 版本上已经失效，Android 源码里已经给 freeStorageAndNotify 方法声明添加了 @SystemApi 注释（开始添加了 @PrivateApi，后修改为 @SystemApi），见「添加」和「修改」两次提交，而且 CLEAR_APP_CACHE 方法的权限已经由 dangerous 改成了 system signature，已经无法通过反射来正常调用，会产生 java.lang.reflect.InvocationTargetException，所以在这些版本上需要另想办法了，StackOverflow 上的一个相关讨论链接：What’s the meaning of new @SystemApi annotation, any difference from @hide?。
 
-### 有 root 权限的系统缓存计算与清理
+## 有 root 权限的系统缓存计算与清理
 
 如果能获取到 root 权限，/data/data 目录的访问限制也就不再是问题，计算缓存大小和清理缓存也就不用再受上面说的方法与权限的限制了，而且能做一些没有 root 权限的情况下做不到的事情，比如：
 
@@ -562,15 +562,18 @@ int free_cache(int64_t free_size)
 
 实现思路很简单粗暴（如下思路未写实例验证）：
 
-**思路一 **  
+**思路一**  
+
 通过 su 命令获取一个有 root 权限的 shell，然后通过与它交互来获取缓存文件夹的大小或清理缓存，比如让它执行命令 du -h /data/data/com.trello/cache 就能获取到 trello 的「内部缓存」大小，让它执行 rm -rf /data/data/com.trello/cache 就能删除 trello 的「内部缓存」。
 
 注：du 命令行与参数在不同 ROM 下的不一致，所以并不推荐此做法。
 
-**思路二 **  
+**思路二**  
+
 或者，也可以做一个原生程序专门来负责缓存计算与清理，通过 su 命令获取有 root 权限的 shell，再用 shell 创建该原生程序进程，它继承 shell 的 root 权限，然后它就可以计算缓存大小与清理缓存，再将结果上报给 APP 进程。
 
 
 ----------  
+
 ##### 学习笔记，如有谬误，敬请指正。
 
