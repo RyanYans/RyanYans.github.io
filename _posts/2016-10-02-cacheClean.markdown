@@ -27,7 +27,8 @@ tags:
 
 先说结论：
 
-「系统缓存」由所有已安装应用的 /data/data/packagename/cache 文件夹和 /sdcard/Android/data/packagename/cache 文件夹组成。
+「系统缓存」由所有已安装应用的 /data/data/packagename/cache 文件夹
+和 /sdcard/Android/data/packagename/cache 文件夹组成。
 
 如下是原理分析，不感兴趣的可以直接跳到下一节。
 
@@ -67,34 +68,35 @@ Settings APP 使用了 PackageManager.getPackageSizeInfo 方法来做此事，�
 
 我们回顾一下 Settings APP 里的做法：
 
-class BackgroundHandler extends Handler {
-    ......
-    final IPackageStatsObserver.Stub mStatsObserver = new IPackageStatsObserver.Stub() {
-                public void onGetStatsCompleted(PackageStats stats, boolean succeeded) {
-                    ......
-                                    entry.cacheSize = stats.cacheSize;
-                                    ......
-                                    entry.externalCacheSize = stats.externalCacheSize;
-                    ......
-                }
-            };
-    ......
-    @Override
-    public void handleMessage(Message msg) {
-        ......
-        switch (msg.what) {
-            ......
-            case MSG_LOAD_SIZES: {
-                synchronized (mEntriesMap) {
-                    ......
-                                mPm.getPackageSizeInfo(mCurComputingSizePkg, mStatsObserver);
-                    ......
-                }
-            } break;
-        }
-    }
-    ......
-}
+	class BackgroundHandler extends Handler {
+	    ......
+	    final IPackageStatsObserver.Stub mStatsObserver = new IPackageStatsObserver.Stub() {
+	                public void onGetStatsCompleted(PackageStats stats, boolean succeeded) {
+	                    ......
+	                                    entry.cacheSize = stats.cacheSize;
+	                                    ......
+	                                    entry.externalCacheSize = stats.externalCacheSize;
+	                    ......
+	                }
+	            };
+	    ......
+	    @Override
+	    public void handleMessage(Message msg) {
+	        ......
+	        switch (msg.what) {
+	            ......
+	            case MSG_LOAD_SIZES: {
+	                synchronized (mEntriesMap) {
+	                    ......
+	                                mPm.getPackageSizeInfo(mCurComputingSizePkg, mStatsObserver);
+	                    ......
+	                }
+	            } break;
+	        }
+	    }
+	    ......
+	}
+
 这个类定义在文件 packages/apps/Settings/src/com/android/settings/applications/ApplicationsState.java 中。
 
 **这里有两个问题需要解决：**
@@ -103,12 +105,13 @@ class BackgroundHandler extends Handler {
 
 从 PackageManager.java 文件的 getPackageSizeInfo 方法定义处可知，它需要 GET_PACKAGE_SIZE 权限，幸运的是，从 frameworks/base/core/res/AndroidManifex.xml 文件里可知，该权限的 Protection level 为 normal，是可以正常声明的。
 
-<!-- Allows an application to find out the space used by any package. -->
-<permission android:name="android.permission.GET_PACKAGE_SIZE"
-    android:permissionGroup="android.permission-group.SYSTEM_TOOLS"
-    android:protectionLevel="normal"
-    android:label="@string/permlab_getPackageSize"
-    android:description="@string/permdesc_getPackageSize" />
+	<!-- Allows an application to find out the space used by any package. -->
+	<permission android:name="android.permission.GET_PACKAGE_SIZE"
+	    android:permissionGroup="android.permission-group.SYSTEM_TOOLS"
+	    android:protectionLevel="normal"
+	    android:label="@string/permlab_getPackageSize"
+	    android:description="@string/permdesc_getPackageSize" />
+
 这段代码定义在文件 frameworks/base/core/res/AndroidManifex.xml 中。
 
 2. 传给 getPackageSizeInfo 方法的第二个参数类型 IPackageStatsObserver 是在 android.content.pm 包下，需要自已通过 aidl 方式定义。
@@ -130,40 +133,41 @@ class BackgroundHandler extends Handler {
 
 获取 QQ 的系统缓存大小的示例代码：
 
-public void someFunc() {
-    IPackageStatsObserver.Stub observer = new PackageSizeObserver();
-    getPackageInfo("com.tencent.mobileqq", observer);
-}
+		public void someFunc() {
+		    IPackageStatsObserver.Stub observer = new PackageSizeObserver();
+		    getPackageInfo("com.tencent.mobileqq", observer);
+		}
+		
+		public void getPackageInfo(String packageName, IPackageStatsObserver.Stub observer) {
+		    try {
+		        PackageManager pm = ContextUtil.applicationContext.getPackageManager();
+		        Method getPackageSizeInfo = pm.getClass()
+		                .getMethod("getPackageSizeInfo", String.class, IPackageStatsObserver.class);
+		
+		        getPackageSizeInfo.invoke(pm, packageName, observer);
+		    } catch (NoSuchMethodException e ) {
+		        e.printStackTrace();
+		    } catch (IllegalAccessException e) {
+		        e.printStackTrace();
+		    } catch (InvocationTargetException e) {
+		        e.printStackTrace();
+		    }
+		}
+		
+		private class PackageSizeObserver extends IPackageStatsObserver.Stub {
+		    @Override
+		    public void onGetStatsCompleted(PackageStats packageStats, boolean succeeded)
+		            throws RemoteException {
+		        if (packageStats == null || !succeeded) {
+		        } else {
+		            AppEntry entry = new AppEntry();
+		            entry.packageName = packageStats.packagename;
+		            entry.cacheSize = packageStats.cacheSize + packageStats.externalCacheSize;
+		            // do something else，比如把 entry 通过消息发送给需要的地方，或者添加到你的列表里
+		        }
+		    }
+		}
 
-public void getPackageInfo(String packageName, IPackageStatsObserver.Stub observer) {
-    try {
-        PackageManager pm = ContextUtil.applicationContext.getPackageManager();
-        Method getPackageSizeInfo = pm.getClass()
-                .getMethod("getPackageSizeInfo", String.class, IPackageStatsObserver.class);
-
-        getPackageSizeInfo.invoke(pm, packageName, observer);
-    } catch (NoSuchMethodException e ) {
-        e.printStackTrace();
-    } catch (IllegalAccessException e) {
-        e.printStackTrace();
-    } catch (InvocationTargetException e) {
-        e.printStackTrace();
-    }
-}
-
-private class PackageSizeObserver extends IPackageStatsObserver.Stub {
-    @Override
-    public void onGetStatsCompleted(PackageStats packageStats, boolean succeeded)
-            throws RemoteException {
-        if (packageStats == null || !succeeded) {
-        } else {
-            AppEntry entry = new AppEntry();
-            entry.packageName = packageStats.packagename;
-            entry.cacheSize = packageStats.cacheSize + packageStats.externalCacheSize;
-            // do something else，比如把 entry 通过消息发送给需要的地方，或者添加到你的列表里
-        }
-    }
-}
 获取一个应用的缓存的问题解决了，获取所有应用的系统缓存也就是遍历系统已安装应用，然后挨个调用 getPackageInfo 的事儿了。
 
 例：
@@ -354,7 +358,7 @@ private class PackageSizeObserver extends IPackageStatsObserver.Stub {
 
 这段声明定义在 frameworks/base/core/res/AndroidManifest.xml 中。
 
-它的 protectionLevel 为 signature|system，系统应用或者与系统采用相同签名的应用才能获得此权限。
+它的 protectionLevel 为 signaturesystem，系统应用或者与系统采用相同签名的应用才能获得此权限。
 
 此路不通。
 
@@ -389,32 +393,33 @@ public abstract void freeStorageAndNotify(long freeStorageSize, IPackageDataObse
 
 我们来看看这个方法实际做了什么事情：
 
-public class PackageManagerService extends IPackageManager.Stub {
-    ......
-    public void freeStorageAndNotify(final long freeStorageSize, final IPackageDataObserver observer) {
-        mContext.enforceCallingOrSelfPermission(
-                android.Manifest.permission.CLEAR_APP_CACHE, null);
-        // Queue up an async operation since clearing cache may take a little while.
-        mHandler.post(new Runnable() {
-            public void run() {
-                mHandler.removeCallbacks(this);
-                int retCode = -1;
-                retCode = mInstaller.freeCache(freeStorageSize);
-                if (retCode < 0) {
-                    Slog.w(TAG, "Couldn't clear application caches");
-                }
-                if (observer != null) {
-                    try {
-                        observer.onRemoveCompleted(null, (retCode >= 0));
-                    } catch (RemoteException e) {
-                        Slog.w(TAG, "RemoveException when invoking call back");
-                    }
-                }
-            }
-        });
-    }
-    ......
-}
+	public class PackageManagerService extends IPackageManager.Stub {
+	    ......
+	    public void freeStorageAndNotify(final long freeStorageSize, final IPackageDataObserver observer) {
+	        mContext.enforceCallingOrSelfPermission(
+	                android.Manifest.permission.CLEAR_APP_CACHE, null);
+	        // Queue up an async operation since clearing cache may take a little while.
+	        mHandler.post(new Runnable() {
+	            public void run() {
+	                mHandler.removeCallbacks(this);
+	                int retCode = -1;
+	                retCode = mInstaller.freeCache(freeStorageSize);
+	                if (retCode < 0) {
+	                    Slog.w(TAG, "Couldn't clear application caches");
+	                }
+	                if (observer != null) {
+	                    try {
+	                        observer.onRemoveCompleted(null, (retCode >= 0));
+	                    } catch (RemoteException e) {
+	                        Slog.w(TAG, "RemoveException when invoking call back");
+	                    }
+	                }
+	            }
+	        });
+	    }
+	    ......
+	}
+
 这个类定义在文件 frameworks/base/services/java/com/android/server/pm/PackageManagerService.java 中。
 
 也就是说，这个方法的注释里没有提及它需要申请什么权限，但事实上它是需要 CLEAR_APP_CACHE 权限的。
@@ -481,7 +486,7 @@ int free_cache(int64_t free_size)
 
 在自己的工程的 src/main 目录下创建包目录结构 aidl/android/content/pm。
 
-注：这是使用 Android Studio 的默认做法，使用 Eclipse 默认在 src 目录下创建包目录结构 android/content/pm。
+（注：这是使用 Android Studio 的默认做法，使用 Eclipse 默认在 src 目录下创建包目录结构 android/content/pm。）
 
 将 Android 源码 frameworks/base/core/java/android/content/pm 目录下的 IPackageDataObserver.aidl 拷贝到上面一步创建的目录里。
 
@@ -545,7 +550,7 @@ int free_cache(int64_t free_size)
 	    return file.delete();
 	}
 
-**备注：** 经测试该方法在 Android 6.0 版本和部分 5.0+ 版本上已经失效，Android 源码里已经给 freeStorageAndNotify 方法声明添加了 @SystemApi 注释（开始添加了 @PrivateApi，后修改为 @SystemApi），见「添加」和「修改」两次提交，而且 CLEAR_APP_CACHE 方法的权限已经由 dangerous 改成了 system|signature，已经无法通过反射来正常调用，会产生 java.lang.reflect.InvocationTargetException，所以在这些版本上需要另想办法了，StackOverflow 上的一个相关讨论链接：What’s the meaning of new @SystemApi annotation, any difference from @hide?。
+**备注：** 经测试该方法在 Android 6.0 版本和部分 5.0+ 版本上已经失效，Android 源码里已经给 freeStorageAndNotify 方法声明添加了 @SystemApi 注释（开始添加了 @PrivateApi，后修改为 @SystemApi），见「添加」和「修改」两次提交，而且 CLEAR_APP_CACHE 方法的权限已经由 dangerous 改成了 system signature，已经无法通过反射来正常调用，会产生 java.lang.reflect.InvocationTargetException，所以在这些版本上需要另想办法了，StackOverflow 上的一个相关讨论链接：What’s the meaning of new @SystemApi annotation, any difference from @hide?。
 
 ### 有 root 权限的系统缓存计算与清理
 
@@ -557,13 +562,15 @@ int free_cache(int64_t free_size)
 
 实现思路很简单粗暴（如下思路未写实例验证）：
 
-**思路一 ** 通过 su 命令获取一个有 root 权限的 shell，然后通过与它交互来获取缓存文件夹的大小或清理缓存，比如让它执行命令 du -h /data/data/com.trello/cache 就能获取到 trello 的「内部缓存」大小，让它执行 rm -rf /data/data/com.trello/cache 就能删除 trello 的「内部缓存」。
+**思路一 **  
+通过 su 命令获取一个有 root 权限的 shell，然后通过与它交互来获取缓存文件夹的大小或清理缓存，比如让它执行命令 du -h /data/data/com.trello/cache 就能获取到 trello 的「内部缓存」大小，让它执行 rm -rf /data/data/com.trello/cache 就能删除 trello 的「内部缓存」。
 
 注：du 命令行与参数在不同 ROM 下的不一致，所以并不推荐此做法。
 
-**思路二 ** 或者，也可以做一个原生程序专门来负责缓存计算与清理，通过 su 命令获取有 root 权限的 shell，再用 shell 创建该原生程序进程，它继承 shell 的 root 权限，然后它就可以计算缓存大小与清理缓存，再将结果上报给 APP 进程。
+**思路二 **  
+或者，也可以做一个原生程序专门来负责缓存计算与清理，通过 su 命令获取有 root 权限的 shell，再用 shell 创建该原生程序进程，它继承 shell 的 root 权限，然后它就可以计算缓存大小与清理缓存，再将结果上报给 APP 进程。
 
 
 ----------  
-###### 学习笔记，如有谬误，敬请指正。
+##### 学习笔记，如有谬误，敬请指正。
 
