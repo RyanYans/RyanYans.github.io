@@ -4,7 +4,7 @@ title:      "Android 系统状态栏沉浸式 && 顶部标题栏去除 "
 subtitle:   " \"记录Android系统标题栏去除及沉浸式状态栏的解决方案...\""
 date:       2016-10-18 00:30:00
 author:     "RyanYans"
-header-img: "img/post-bg-actionbar.jpg"
+header-img: "img/post-bg-actionbar.jpeg"
 catalog: true
 tags:
     - Android
@@ -20,7 +20,7 @@ tags:
 
 ### 去除顶部标题栏  
 直接上代码：
-styles.xml：
+styles.xml上添加：
 
 			<!--安卓6.0去掉标题栏的方法-->
 		    <style name="AppTheme.NoActionBar">
