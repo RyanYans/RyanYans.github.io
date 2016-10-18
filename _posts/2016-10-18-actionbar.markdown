@@ -1,10 +1,10 @@
 ---
 layout:     post
 title:      "Android 系统状态栏沉浸式 && 顶部标题栏去除 "
-subtitle:   " \"这篇笔记记录Android系统标题栏去除及沉浸式状态栏的解决方案...\""
+subtitle:   " \"记录Android系统标题栏去除及沉浸式状态栏的解决方案...\""
 date:       2016-10-18 00:30:00
 author:     "RyanYans"
-header-img: "img/post-bg-freecache.jpg"
+header-img: "img/post-bg-actionbar.jpg"
 catalog: true
 tags:
     - Android
