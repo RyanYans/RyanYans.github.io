@@ -38,7 +38,8 @@ tags:
 * 基于Git，很多东西需要动手，不像Wordpress有强大的后台。
 
 ## 二、快速搭建一个博客原型
-### 首先确认：
+
+### 首先确认：  
 * 拥有一个GitHub账号
 * 已经安装 Git 
 
@@ -48,9 +49,9 @@ tags:
 
 * 本地运行Git，随意选个目录，将刚才创建的项目clone下来
     
-    	cd /f/Blog
-    	git clone https://github.com/UserName/UserName.github.io.git
-    	cd Blog
+	    	cd /f/Blog
+		git clone https://github.com/UserName/UserName.github.io.git
+		cd Blog
 
 ### 2.了解Jekyll模板的基本结构
 
@@ -166,42 +167,43 @@ OK，那么博客主页设计完毕！（别吵…我答应过你要快速搭建
 OK，那么第一篇文章也写好了，再把最新的repo推送到github，稍等片刻，就可以…等下，忘记给文章加上入口的链接了。
 
 重新打开我们的 index.html 文件，添加内容，变成下面这样：
-    	---
-    	title: My Blog
-    	---
-    	
-    	{{ \page.title }}
-    	
-    	{% for post in site.posts %}
-    	
-    	{{ \post.date|date_to_string }} <a href='{{ \site.baseurl }}{{ \post.url }}'>{{ \post.title }}</a>
-    	
-    	{% endfor %}
+
+	   	---
+	    	title: My Blog
+	    	---
+	    	
+	    	-- {{ \page.title }}
+	    	
+	    	-- {% for post in site.posts %}
+	    	
+	    	-- {{ \post.date|date_to_string }} <a href='{{ \site.baseurl }}{{ \post.url }}'>{{ \post.title }}</a>
+	    	
+	    	-- {% endfor %} 
 
 ### 7.增加模板套装_layouts
 很抱歉我欺骗了你，这已经超出快速的范围了，可能有很多人已经坚持不到这步了。。不过至少我们进展很快～接下来——如果你仍有兴趣的话，让我们为网站增加一些统一性的风格设置。
 
 回到项目根目录，新建文件夹 _layouts，顾名思义，“布局”是也。在 _layouts 中新建一个最基本的布局文件，姑且命名为default.html好了（记得首先解决了UTF-8的编码问题哦）：  
 	
-	<!DOCTYPE html>
-	<html>
-	<head>
-	  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-	  <title>{{ \page.title }}</title>
-	</head>
-	<body>
-	
-	  {{ content }}
-	
-	</body>
-	</html>
+		--<!DOCTYPE html>
+		--<html>
+		--<head>
+		  --<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		  --<title>{{ \page.title }}</title>
+		--</head>
+		--<body>
+		
+		  --{{ content }}
+		
+		--</body>
+		--</html>
 
 然后我们修改index.html和刚写完的那篇文章，只要在头属性上加一句就好：
 
-    	---
-    	title: xxoo
-    	layout: default.html
-    	---
+	    	---
+	    	title: xxoo
+	    	layout: default.html
+	    	---
 
 我们当然还可以把这个结构变得更灵活一些，比如继续新增两个模板分别叫做l_post.html与l_index.html，他们首先引用default.html，但在其基础上做出一定的修改。然后首页使用l_index模板，而所有的post文件则使用l_post模板，等等等等，请随意发挥。但始终记得加上 {{ content }} 标签
 
