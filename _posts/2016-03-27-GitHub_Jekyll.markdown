@@ -162,7 +162,7 @@ OK，那么博客主页设计完毕！（别吵…我答应过你要快速搭建
 
 这段内容中使用了最常用的几种Markdown语法，比如使用 # ，## 表示 HTML 中的h1>/h1>,h2>/h2>。使用[text](link)创建超链接，使用 连续多个 - 创建水平线（注意：不包括最上端包围title所使用的横线，那里表示一个页面的“头属性”），等等。更多详细的语法可以在之前提到的页面查询，这里不再赘述，总之，这是一种更加贴近真实写作的语法，推荐大家尝试。
 
-啊对了，最后面的那个 `{{ .page.date|date_to_string. }} `是指显示本页的日期属性，并且转换为可读的字符串形式。同样也是Liquid语法。
+啊对了，最后面的那个 `.page.date|date_to_string.  `是指显示本页的日期属性，并且转换为可读的字符串形式。同样也是Liquid语法。
 
 OK，那么第一篇文章也写好了，再把最新的repo推送到github，稍等片刻，就可以…等下，忘记给文章加上入口的链接了。
 
@@ -189,16 +189,15 @@ OK，那么第一篇文章也写好了，再把最新的repo推送到github，�
 回到项目根目录，新建文件夹 _layouts，顾名思义，“布局”是也。在 _layouts 中新建一个最基本的布局文件，姑且命名为default.html好了（记得首先解决了UTF-8的编码问题哦）：  
 
 ```
-
 		--<!DOCTYPE html>
 		--<html>
 		--<head>
 		  --<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-		  --<title>{{ \page.title }}</title>
+		  --<title>{{ \page..title }}</title>
 		--</head>
 		--<body>
 		
-		  --{{ ...content.. }}
+		  -- ...content... --
 		
 		--</body>
 		--</html>
@@ -211,7 +210,7 @@ OK，那么第一篇文章也写好了，再把最新的repo推送到github，�
 	    	layout: default.html
 	    	---
 
-我们当然还可以把这个结构变得更灵活一些，比如继续新增两个模板分别叫做l_post.html与l_index.html，他们首先引用default.html，但在其基础上做出一定的修改。然后首页使用l_index模板，而所有的post文件则使用l_post模板，等等等等，请随意发挥。但始终记得加上 {{ content }} 标签
+我们当然还可以把这个结构变得更灵活一些，比如继续新增两个模板分别叫做l_post.html与l_index.html，他们首先引用default.html，但在其基础上做出一定的修改。然后首页使用l_index模板，而所有的post文件则使用l_post模板，等等等等，请随意发挥。但始终记得加上 content 标签
 
 再次推送到服务端，查看效果。
 
