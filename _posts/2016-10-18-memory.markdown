@@ -1,10 +1,10 @@
 ---
 layout:     post
-title:      "Android内存优化 "
-subtitle:   " \"记录Android内存优化及内存泄露解决方案...\""
+title:      " Android内存优化之OOM篇 "
+subtitle:   " \" 记录Android内存优化及内存泄露解决方案...\""
 date:       2017-03-15 00:30:00
 author:     "RyanYans"
-header-img: "img/post-bg-actionbar.jpeg"
+header-img: "post-bg-memory.jpg"
 catalog: true
 tags:
     - Android
@@ -57,7 +57,7 @@ Android系统的Dalvik虚拟机扮演了内存垃圾自动回收的角色。
 ### 内存泄漏的发现
 
 说了这么多 现在该说我们 内存泄露检测神器了！
-内存泄漏的分析的话，必须使用工具才行，庆幸的是，各路大神已经给我们提供了很多强大的内存分析工具，我这里只会讲最方便的。这里提供几个套餐供选择
+内存泄漏的分析的话，必须使用工具才行，庆幸的是，各路大神已经给我们提供了很多强大的内存分析工具，我这里只会讲最方便的。这里提供几个套餐供选择：
 
 #### 套餐一:Studio自带Heap Viewer
 
@@ -127,11 +127,11 @@ LeakCanary是Square公司推出的内存泄露检测工具，其实Square公司�
 
 然后，就没有然后了。。
 
-4. 打开你的App就会附上一个App
+4.打开你的App就会附上一个App
 
 ![S70321-203049(1)(1).jpg](https://ooo.0o0.ooo/2017/03/21/58d11e321a2c3.jpg)
 
-5. 通过这个泄漏路径，就对应进行内存泄漏的原因进行分析了，你也可以通过输出的日志进行内存泄漏的定位了！
+5.通过这个泄漏路径，就对应进行内存泄漏的原因进行分析了，你也可以通过输出的日志进行内存泄漏的定位了！
 
 ![S70321-20370466.jpg](https://ooo.0o0.ooo/2017/03/21/58d11e88c36c8.jpg)
 
