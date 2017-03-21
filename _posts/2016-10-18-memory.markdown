@@ -4,7 +4,7 @@ title:      " Android内存优化之OOM篇 "
 subtitle:   " \" 记录Android内存优化及内存泄露解决方案...\""
 date:       2017-03-15 00:30:00
 author:     "RyanYans"
-header-img: "post-bg-memory.jpg"
+header-img: "img/post-bg-memory.jpg"
 catalog: true
 tags:
     - Android
