@@ -1,0 +1,147 @@
+---
+layout:     post
+title:      " Android消息机制之Handler源码分析 "
+subtitle:   " \" 记录Android的消息机制理解及对Handler的源码解剖...\""
+date:       2017-04-11 00:30:00
+author:     "RyanYans"
+header-img: "img/post-bg-handler.jpg"
+catalog: true
+tags:
+    - Android
+    - Handler
+    - 消息机制
+---
+
+
+本文记录的是我对 Android 消息机制探索与理解。
+
+
+### Android中的消息机制
+
+提到Android的消息机制大家应该都不会陌生，在日常开发中也经常不可避免的涉及到这部分内容。Android中的消息机制主要指Handler的运行机制，而Handler是Android消息机制的上层接口，我们在开发过程中也只需和Handler交互即可。通过Handler，我们可以轻松地将一个任务切换到Hanlder所属线程中去执行。因此，Handler经常被开发者用来更新UI，当然它并不局限于此。
+
+### 为什么使用Handler机制？
+
+1. 保证线程安全
+2. 使多个线程并发操作UI组件
+
+Android中主线程不能执行耗时操作，会导致ANR异常，所有请求网络、数据大批量操作都在子线程中，但是子线程又不能更新UI，所以Google为我们分装了Handler消息机制。
+
+Android 中主线程也叫 UI 线程，那么从名字上我们也知道主线程主要是用来创建、更新 UI 的，而其他耗时操作，比如网络访问，或者文件处理，多媒体处理等都需要在子线程中操作，之所以在子线程中操作是为了保证 UI 的流畅程度，手机显示的刷新频率是 60Hz，也就是一秒钟刷新 60 次，每 16.67 毫秒刷新一次，为了不丢帧，那么主线程处理代码最好不要超过 16 毫秒。当子线程处理完数据后，为了防止 UI 处理逻辑的混乱，Android 只允许主线程修改 UI，那么这时候就需要 Handler 来充当子线程和主线程之间的桥梁了。
+
+### 相关概念
+
+#### MainThread
+
+定义：程序第一次启动时，Android会同时启动一条主线程（MainThread）  
+作用：主线程主要负责处理与UI相关的事件，所以主线程又叫UI线程
+
+#### Handler
+
+定义：Handler是Message的主要处理者
+作用：负责将Message添加到消息队列中并处理Looper分派过来的Message
+
+#### Message
+
+定义：Handler接收和处理的消息对象，可以理解为封装了某些数据的对象  
+使用：后台线程处理完数据后需要更新UI，可发送一条包含更新信息的Message给UI线程
+
+#### Message Queue
+
+定义：消息队列
+作用：用来存放通过Handler发送的消息，按照先进先出的顺序排列
+
+#### ThreadLocal
+
+定义：轮询器，不断的取出MessageQueue中的消息并传递给Handler
+作用：不断循环向MessageQueue获取Message，将取出的Message交付给相应的Handler
+
+#### Looper
+
+定义：线程内部的数据存储类
+作用： 通过它可以在指定的线程中存储数据，数据存储以后，只有在指定线程中可以获取到存储的数据，对于其他线程来说则无法获取到数据
+
+### Android的消息机制分析
+
+#### 通过Handler.obtainMessage获取消息
+
+在我们需要使用一个Message对象发送消息时，我们通常都不会直接去new出一个Message对象，而是从Handler类中的去获取。我们日常使用都会这么做，但其工作原理却很容易被忽视，今天有空抽出时间来研究研究：
+
+![6.png](https://ooo.0o0.ooo/2017/04/13/58ef89b47de4c.png)
+
+![G8GCN.png](https://ooo.0o0.ooo/2017/04/13/58ef8a53e5521.png)
+
+![66G08O7V9EVP_65A.png](https://ooo.0o0.ooo/2017/04/13/58ef8ad0f386a.png)
+
+通过对Handler.obtainMessaged()代码的跟踪，我们可以发现其实质上是从消息缓存池上拿来一个msg对象来复用。
+而new Message()则需要重新申请分配内存空间导致效率更低！
+
+#### 创建Handler对象
+
+private Handler mHandler = new Handler(); 
+这样一条创建语句到底底层干了什么？我们深入看看！
+
+![2I}V9OFK)XM4U~TW6BI(D(4.png](https://ooo.0o0.ooo/2017/04/13/58ef8df844a28.png)
+
+![O_BK2.png](https://ooo.0o0.ooo/2017/04/13/58ef8f0aa760d.png)
+
+通过代码跟踪，我们可以发现在Handler创建过程中就会在构造方法上获取到Looper和MessageQueue的对象，然后我们再深入myLooper方法。
+
+![%49(Z_]N}TTX`FQP`SD~74X.png](https://ooo.0o0.ooo/2017/04/13/58ef8f8bd5603.png)
+
+我们可以发现Looper对象是通过ThreadLocal得到的，这是我们就有了疑问：Looper是什么时候存进去的呢？
+带着疑问我们继续往下跟踪：
+
+![WPVL.png](https://ooo.0o0.ooo/2017/04/13/58ef90fd8f729.png)
+
+![(O}SV@S){6KA%PHR$XUZ$JC.png](https://ooo.0o0.ooo/2017/04/13/58ef91626769c.png)
+
+至此，我们可以发现Looper是直接new出来的，并且在parpare方法中设置给了ThreadLocal（忘记ThreadLocal概念请往上翻页看上文概念介绍）。并且在Looper的构造方法中，创建了一个消息队列MessageQueue。
+
+#### 系统主线程中的Handler
+
+通过上面分析，我们知道Handler在创建时就会得到一个Looper轮询器及MessageQueue消息队列。而在parpare方法中创建了Looper及MessageQueue。然而，这时我们又有了疑问，我们没调用过parpare方法呀，怎么Handler就能获取到了Looper和MessageQueue了呢？
+
+其实，这是因为谷歌工程师深知我们在开发中会经常使用到Handler消息机制，就干脆把他们都封装到了底层中的ActivityThread类中，系统从一开始帮我们初始化一个主线程的Handler、Looper和MessageQueue。
+
+我们都知道Java的程序入口是main函数，Android自然也是一样，通过分析AcitivityThread的源码：
+
+![6P6`O6MM_Q57.png](https://ooo.0o0.ooo/2017/04/13/58ef95d46827e.png)
+
+![GNQ9$FKHL6YDU7G0KY26@D1.png](https://ooo.0o0.ooo/2017/04/13/58ef95f99de94.png)
+
+也就是在应用启动时，主线程要被启动，ActivityThread会被创建，在此类的main方法中就进行了初始化。
+
+看到这里可能大家会有这么一个疑问，那就是看到AcitivityThread.main方法里面就寥寥几行代码，main方法运行完了整个App程序不也就退出了吗？为什么App能够一直存在呢？其实是因为Looper.loop()里面执行了一个死循环，不断轮询消息队列中的消息。
+
+![UTW`XWPF7UEYPCP@R]R.png](https://ooo.0o0.ooo/2017/04/13/58ef98c46a937.png)
+
+#### Handler发送消息
+
+继续观察源码，发现sendMessage( )的所有重载，实际最终都调用了sendMessageAtTime( )
+
+![8P)GAMUE.png](https://ooo.0o0.ooo/2017/04/13/58ef9ab312376.png)
+
+![75WMSFEC6.png](https://ooo.0o0.ooo/2017/04/13/58ef9ab426fa1.png)
+
+![108EDVXE8TU.png](https://ooo.0o0.ooo/2017/04/13/58ef9ab537e6e.png)
+
+在enqueueMessage把消息通过重新排序放入消息队列，从这里我们也能够了解MessageQueue队列其实是采用单链表的数据结构来存储Message消息的，其中以next成员(指针)指向队列的下一条消息。
+
+#### Looper获取消息
+
+继续深入Looper.loop()方法中：
+
+![URA8}JF@EKGN(Z(7C]10XYG.png](https://ooo.0o0.ooo/2017/04/13/58ef9d2df2430.png)
+
+![O@%YX7EJ]HXQ15A29S`UGUF.png](https://ooo.0o0.ooo/2017/04/13/58ef9e05defd4.png)
+
+我们发现Looper不断轮询消息队列，一旦获取到消息就立刻分发到指定handler中，由它的handlerMessage处理。
+
+其中msg的target属性也就是handler对象，用于记录该消息由哪个Handler处理消息，在obtain方法中赋值。
+
+Message中保存了callback(Runnabe)和target(Handler)，也可以调用Message的sendToTarget()方法来发消息，前提是必须已经给Message设置了target对象。
+
+----------  
+
+##### 学习笔记，如有谬误，敬请指正。
