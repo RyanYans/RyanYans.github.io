@@ -69,7 +69,11 @@ Android 中主线程也叫 UI 线程，那么从名字上我们也知道主线�
 
 ![6.png](https://ooo.0o0.ooo/2017/04/13/58ef89b47de4c.png)
 
+----------  
+
 ![G8GCN.png](https://ooo.0o0.ooo/2017/04/13/58ef8a53e5521.png)
+
+----------  
 
 ![66G08O7V9EVP_65A.png](https://ooo.0o0.ooo/2017/04/13/58ef8ad0f386a.png)
 
@@ -81,20 +85,24 @@ Android 中主线程也叫 UI 线程，那么从名字上我们也知道主线�
 private Handler mHandler = new Handler(); 
 这样一条创建语句到底底层干了什么？我们深入看看！
 
-![2I}V9OFK)XM4U~TW6BI(D(4.png](https://ooo.0o0.ooo/2017/04/13/58ef8df844a28.png)
+![24.png](https://ooo.0o0.ooo/2017/04/13/58ef8df844a28.png)
 
-![O_BK2.png](https://ooo.0o0.ooo/2017/04/13/58ef8f0aa760d.png)
+----------  
+
+![2.png](https://ooo.0o0.ooo/2017/04/13/58ef8f0aa760d.png)
 
 通过代码跟踪，我们可以发现在Handler创建过程中就会在构造方法上获取到Looper和MessageQueue的对象，然后我们再深入myLooper方法。
 
-![%49(Z_]N}TTX`FQP`SD~74X.png](https://ooo.0o0.ooo/2017/04/13/58ef8f8bd5603.png)
+![X.png](https://ooo.0o0.ooo/2017/04/13/58ef8f8bd5603.png)
 
 我们可以发现Looper对象是通过ThreadLocal得到的，这是我们就有了疑问：Looper是什么时候存进去的呢？
 带着疑问我们继续往下跟踪：
 
 ![WPVL.png](https://ooo.0o0.ooo/2017/04/13/58ef90fd8f729.png)
 
-![(O}SV@S){6KA%PHR$XUZ$JC.png](https://ooo.0o0.ooo/2017/04/13/58ef91626769c.png)
+----------  
+
+![(OC.png](https://ooo.0o0.ooo/2017/04/13/58ef91626769c.png)
 
 至此，我们可以发现Looper是直接new出来的，并且在parpare方法中设置给了ThreadLocal（忘记ThreadLocal概念请往上翻页看上文概念介绍）。并且在Looper的构造方法中，创建了一个消息队列MessageQueue。
 
@@ -106,15 +114,17 @@ private Handler mHandler = new Handler();
 
 我们都知道Java的程序入口是main函数，Android自然也是一样，通过分析AcitivityThread的源码：
 
-![6P6`O6MM_Q57.png](https://ooo.0o0.ooo/2017/04/13/58ef95d46827e.png)
+![6P57.png](https://ooo.0o0.ooo/2017/04/13/58ef95d46827e.png)
 
-![GNQ9$FKHL6YDU7G0KY26@D1.png](https://ooo.0o0.ooo/2017/04/13/58ef95f99de94.png)
+----------  
+
+![GNQ9D1.png](https://ooo.0o0.ooo/2017/04/13/58ef95f99de94.png)
 
 也就是在应用启动时，主线程要被启动，ActivityThread会被创建，在此类的main方法中就进行了初始化。
 
 看到这里可能大家会有这么一个疑问，那就是看到AcitivityThread.main方法里面就寥寥几行代码，main方法运行完了整个App程序不也就退出了吗？为什么App能够一直存在呢？其实是因为Looper.loop()里面执行了一个死循环，不断轮询消息队列中的消息。
 
-![UTW`XWPF7UEYPCP@R]R.png](https://ooo.0o0.ooo/2017/04/13/58ef98c46a937.png)
+![UR.png](https://ooo.0o0.ooo/2017/04/13/58ef98c46a937.png)
 
 #### Handler发送消息
 
@@ -122,7 +132,11 @@ private Handler mHandler = new Handler();
 
 ![8P)GAMUE.png](https://ooo.0o0.ooo/2017/04/13/58ef9ab312376.png)
 
+----------  
+
 ![75WMSFEC6.png](https://ooo.0o0.ooo/2017/04/13/58ef9ab426fa1.png)
+
+----------  
 
 ![108EDVXE8TU.png](https://ooo.0o0.ooo/2017/04/13/58ef9ab537e6e.png)
 
@@ -132,9 +146,11 @@ private Handler mHandler = new Handler();
 
 继续深入Looper.loop()方法中：
 
-![URA8}JF@EKGN(Z(7C]10XYG.png](https://ooo.0o0.ooo/2017/04/13/58ef9d2df2430.png)
+![YG.png](https://ooo.0o0.ooo/2017/04/13/58ef9d2df2430.png)
 
-![O@%YX7EJ]HXQ15A29S`UGUF.png](https://ooo.0o0.ooo/2017/04/13/58ef9e05defd4.png)
+----------  
+
+![UGUF.png](https://ooo.0o0.ooo/2017/04/13/58ef9e05defd4.png)
 
 我们发现Looper不断轮询消息队列，一旦获取到消息就立刻分发到指定handler中，由它的handlerMessage处理。
 
