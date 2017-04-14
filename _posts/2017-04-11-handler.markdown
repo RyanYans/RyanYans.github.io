@@ -51,12 +51,12 @@ Android 中主线程也叫 UI 线程，那么从名字上我们也知道主线�
 定义：消息队列
 作用：用来存放通过Handler发送的消息，按照先进先出的顺序排列
 
-#### ThreadLocal
+#### Looper
 
 定义：轮询器，不断的取出MessageQueue中的消息并传递给Handler
 作用：不断循环向MessageQueue获取Message，将取出的Message交付给相应的Handler
 
-#### Looper
+#### ThreadLocal
 
 定义：线程内部的数据存储类
 作用： 通过它可以在指定的线程中存储数据，数据存储以后，只有在指定线程中可以获取到存储的数据，对于其他线程来说则无法获取到数据
