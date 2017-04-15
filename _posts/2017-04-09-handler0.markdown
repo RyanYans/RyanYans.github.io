@@ -1,0 +1,100 @@
+---
+layout:     post
+title:      " Android消息机制(一) 之浅分析 "
+subtitle:   " \" 记录Android的消息机制理解及对Handler机制解剖...\""
+date:       2017-04-09 00:30:00
+author:     "RyanYans"
+header-img: "img/post-bg-handler.jpg"
+catalog: true
+tags:
+    - Android
+    - Handler
+    - 消息机制
+---
+
+本文记录的是我对 Android 消息机制探索与理解。
+
+
+### 什么是Android消息处理机制？
+
+“消息”是windows运行机制中一个基本而又重要的概念。消息是一个报告事件发生的通知，消息驱动是围绕消息的产生与处理展开的，并依靠消息循环机制来实现。与Windows系统一样，Android也是消息驱动型的系统。引用一下消息驱动机制的四要素：  
+  ①接收消息的“消息队列”
+  ②阻塞式地从消息队列中接收消息并进行处理的“线程”
+  ③可发送的“消息的格式”
+  ④“消息发送函数”
+
+与之对应，Android系统中对应实现了：  
+  ①接收消息的“消息队列” ——　MessageQueue
+  ②阻塞式地从消息队列中接收消息并进行处理的“线程” ——　Thread+Looper
+  ③可发送的“消息的格式” ——　Message
+  ④“消息发送函数”——　Handler的post()和sendMessage()
+  Android有大量的交互都以消息驱动方式来进行，比如我们熟知的Android的四大组件——Activity, Service, Broadcast, ContentProvider的启动过程的交互，都离不开消息机制。
+
+### 为什么使用Handler机制？
+
+1. 保证线程安全
+2. 使多个线程并发操作UI组件
+
+Android中主线程不能执行耗时操作，会导致ANR异常，所有请求网络、数据大批量操作都在子线程中，但是子线程又不能更新UI，所以Google为我们分装了Handler消息机制。
+
+Android 中主线程也叫 UI 线程，那么从名字上我们也知道主线程主要是用来创建、更新 UI 的，而其他耗时操作，比如网络访问，或者文件处理，多媒体处理等都需要在子线程中操作，之所以在子线程中操作是为了保证 UI 的流畅程度，手机显示的刷新频率是 60Hz，也就是一秒钟刷新 60 次，每 16.67 毫秒刷新一次，为了不丢帧，那么主线程处理代码最好不要超过 16 毫秒。当子线程处理完数据后，为了防止 UI 处理逻辑的混乱，Android 只允许主线程修改 UI，那么这时候就需要 Handler 来充当子线程和主线程之间的桥梁了。
+
+### 解析Android消息机制
+
+Android中的消息处理主要由4部分构成：Message、MessageQueue、Looper及Handler。谈到Android中的消息机制就不得不分析以上概念：
+
+#### Message
+
+Message是在线程之间传递的消息，它可以在内部携带少量的信息，用于在不同线程之间交换数据。我们可以使用Message的what字段来传递一些基本信息，初次之外还可以使用arg1和arg2字段来携带一些整型数据，使用obj字段携带一个Object对象。
+
+#### MessageQueue
+
+MessageQueue是消息队列的意思，它主要是用于存放所有的Handler发送的消息。这部分消息会一直存在于消息队列中，等待被处理，值得注意的是该队列是以单链表的数据结构存放消息。每个线程中只有一个消息队列（线程单例）。
+
+#### Looper
+
+Looper是每个线程中的MessageQueue的管家，调用Looper的loop()方法后，就会进入到一个无限循环当中，然后每当发现MessageQueue中存在一条消息，就会将它取出，并传递到Handler的handleMessage()方法中。每个线程中也只会有一个Looper对象（线程单例）。
+
+#### Handler
+
+Handler顾名思义也就是处理者的意思，它主要是用于发送和处理消息的。发送消息一般是使用Handler的sendMessage()方法，而发出的消息经过一系列地辗转处理后，最终会传递到Handler的handleMessage()方法中。
+
+* 我们熟悉的使用场景
+		private Handler handler = new Handler(){
+		       @Override
+		       public void handleMessage(Message msg) {
+		           super.handleMessage(msg);
+		           switch (msg.what) {      //判断标志位
+		               case UPDATE_UI:
+		                   //更新UI操作
+		                   break;
+		           }
+		        }
+		      };
+---
+
+		       public class MyThread extends Thread {
+		         @Override
+		            public void run() {
+		              super.run();
+		              //耗时操作
+		            ｝
+		          Message msg =Message.obtain();//从全局池中返回一个message实例，避免多次创建（如new Message）
+		          msg.obj = data;
+		          msg.what=1;   //标志消息的标志
+		          handler.sendMessage(msg);
+		       }
+		
+		       new MyThread().start();
+
+上面代码是我们再Android开发中经常写的一段代码，其主要作用是再子线程中进行耗时操作，并通过Handler向主线程中发送消息，通知主线程做出相应的UI变化。在此之后这条消息会被添加到MessageQueue的队列中等待被处理，而Looper则会一直尝试从MessageQueue中取出待处理消息，最后分发回Handler的handleMessage()方法中。由于Handler是在主线程中创建的，所以此时handleMessage()方法中的代码也会在主线程运行，于是我们在这里就可以安心地进行UI操作了。
+
+附上一副图来加深大家的理解：
+
+![58f03564ae5e7.png](https://ooo.0o0.ooo/2017/04/14/58f037f4f25c9.png)
+
+下一篇我会深入Handler、Looper、Message、MessageQueue的源码，从源码级别上剖析他们之间的关系。
+
+----------  
+
+##### 学习笔记，如有谬误，敬请指正。

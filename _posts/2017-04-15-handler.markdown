@@ -2,7 +2,7 @@
 layout:     post
 title:      " Android消息机制之Handler源码分析 "
 subtitle:   " \" 记录Android的消息机制理解及对Handler的源码解剖...\""
-date:       2017-04-11 00:30:00
+date:       2017-04-15 00:30:00
 author:     "RyanYans"
 header-img: "img/post-bg-handler.jpg"
 catalog: true
@@ -20,16 +20,9 @@ tags:
 
 提到Android的消息机制大家应该都不会陌生，在日常开发中也经常不可避免的涉及到这部分内容。Android中的消息机制主要指Handler的运行机制，而Handler是Android消息机制的上层接口，我们在开发过程中也只需和Handler交互即可。通过Handler，我们可以轻松地将一个任务切换到Hanlder所属线程中去执行。因此，Handler经常被开发者用来更新UI，当然它并不局限于此。
 
-### 为什么使用Handler机制？
+我们在上一篇文章中能够了解到Android中的消息处理主要由4部分构成：Message、MessageQueue、Looper及Handler，下面我们再把相关概念回顾一下吧！
 
-1. 保证线程安全
-2. 使多个线程并发操作UI组件
-
-Android中主线程不能执行耗时操作，会导致ANR异常，所有请求网络、数据大批量操作都在子线程中，但是子线程又不能更新UI，所以Google为我们分装了Handler消息机制。
-
-Android 中主线程也叫 UI 线程，那么从名字上我们也知道主线程主要是用来创建、更新 UI 的，而其他耗时操作，比如网络访问，或者文件处理，多媒体处理等都需要在子线程中操作，之所以在子线程中操作是为了保证 UI 的流畅程度，手机显示的刷新频率是 60Hz，也就是一秒钟刷新 60 次，每 16.67 毫秒刷新一次，为了不丢帧，那么主线程处理代码最好不要超过 16 毫秒。当子线程处理完数据后，为了防止 UI 处理逻辑的混乱，Android 只允许主线程修改 UI，那么这时候就需要 Handler 来充当子线程和主线程之间的桥梁了。
-
-### 相关概念
+### 相关概念回顾
 
 #### MainThread
 
