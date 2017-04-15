@@ -1,6 +1,6 @@
 ---
 layout:     post
-title:      " Android消息机制之Handler源码分析 "
+title:      " Android消息机制(二) 之源码分析 "
 subtitle:   " \" 记录Android的消息机制理解及对Handler的源码解剖...\""
 date:       2017-04-15 00:30:00
 author:     "RyanYans"

@@ -22,13 +22,13 @@ tags:
   ②阻塞式地从消息队列中接收消息并进行处理的“线程”  
   ③可发送的“消息的格式”  
   ④“消息发送函数”  
-
 与之对应，Android系统中对应实现了：  
   ①接收消息的“消息队列” ——　MessageQueue  
   ②阻塞式地从消息队列中接收消息并进行处理的“线程” ——　Thread+Looper  
   ③可发送的“消息的格式” ——　Message  
   ④“消息发送函数”——　Handler的post()和sendMessage()  
-  Android有大量的交互都以消息驱动方式来进行，比如我们熟知的Android的四大组件——Activity, Service, Broadcast, ContentProvider的启动过程的交互，都离不开消息机制。  
+
+Android有大量的交互都以消息驱动方式来进行，比如我们熟知的Android的四大组件——Activity, Service, Broadcast, ContentProvider的启动过程的交互，都离不开消息机制。  
 
 ### 为什么使用Handler机制？
 
