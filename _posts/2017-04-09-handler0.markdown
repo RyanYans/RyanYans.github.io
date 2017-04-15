@@ -18,21 +18,21 @@ tags:
 ### 什么是Android消息处理机制？
 
 “消息”是windows运行机制中一个基本而又重要的概念。消息是一个报告事件发生的通知，消息驱动是围绕消息的产生与处理展开的，并依靠消息循环机制来实现。与Windows系统一样，Android也是消息驱动型的系统。引用一下消息驱动机制的四要素：  
-  ①接收消息的“消息队列”
-  ②阻塞式地从消息队列中接收消息并进行处理的“线程”
-  ③可发送的“消息的格式”
-  ④“消息发送函数”
+  ①接收消息的“消息队列”  
+  ②阻塞式地从消息队列中接收消息并进行处理的“线程”  
+  ③可发送的“消息的格式”  
+  ④“消息发送函数”  
 
 与之对应，Android系统中对应实现了：  
-  ①接收消息的“消息队列” ——　MessageQueue
-  ②阻塞式地从消息队列中接收消息并进行处理的“线程” ——　Thread+Looper
-  ③可发送的“消息的格式” ——　Message
-  ④“消息发送函数”——　Handler的post()和sendMessage()
-  Android有大量的交互都以消息驱动方式来进行，比如我们熟知的Android的四大组件——Activity, Service, Broadcast, ContentProvider的启动过程的交互，都离不开消息机制。
+  ①接收消息的“消息队列” ——　MessageQueue  
+  ②阻塞式地从消息队列中接收消息并进行处理的“线程” ——　Thread+Looper  
+  ③可发送的“消息的格式” ——　Message  
+  ④“消息发送函数”——　Handler的post()和sendMessage()  
+  Android有大量的交互都以消息驱动方式来进行，比如我们熟知的Android的四大组件——Activity, Service, Broadcast, ContentProvider的启动过程的交互，都离不开消息机制。  
 
 ### 为什么使用Handler机制？
 
-1. 保证线程安全
+1. 保证线程安全  
 2. 使多个线程并发操作UI组件
 
 Android中主线程不能执行耗时操作，会导致ANR异常，所有请求网络、数据大批量操作都在子线程中，但是子线程又不能更新UI，所以Google为我们分装了Handler消息机制。
@@ -60,6 +60,7 @@ Looper是每个线程中的MessageQueue的管家，调用Looper的loop()方法�
 Handler顾名思义也就是处理者的意思，它主要是用于发送和处理消息的。发送消息一般是使用Handler的sendMessage()方法，而发出的消息经过一系列地辗转处理后，最终会传递到Handler的handleMessage()方法中。
 
 * 我们熟悉的使用场景
+
 		private Handler handler = new Handler(){
 		       @Override
 		       public void handleMessage(Message msg) {
@@ -71,6 +72,7 @@ Handler顾名思义也就是处理者的意思，它主要是用于发送和处�
 		           }
 		        }
 		      };
+
 ---
 
 		       public class MyThread extends Thread {

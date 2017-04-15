@@ -16,13 +16,13 @@ tags:
 本文记录的是我对 Android 消息机制探索与理解。
 
 
-### Android中的消息机制
+## Android中的消息机制
 
 提到Android的消息机制大家应该都不会陌生，在日常开发中也经常不可避免的涉及到这部分内容。Android中的消息机制主要指Handler的运行机制，而Handler是Android消息机制的上层接口，我们在开发过程中也只需和Handler交互即可。通过Handler，我们可以轻松地将一个任务切换到Hanlder所属线程中去执行。因此，Handler经常被开发者用来更新UI，当然它并不局限于此。
 
 我们在上一篇文章中能够了解到Android中的消息处理主要由4部分构成：Message、MessageQueue、Looper及Handler，下面我们再把相关概念回顾一下吧！
 
-### 相关概念回顾
+## 相关概念回顾
 
 #### MainThread
 
@@ -31,7 +31,7 @@ tags:
 
 #### Handler
 
-定义：Handler是Message的主要处理者
+定义：Handler是Message的主要处理者  
 作用：负责将Message添加到消息队列中并处理Looper分派过来的Message
 
 #### Message
@@ -41,20 +41,20 @@ tags:
 
 #### MessageQueue
 
-定义：消息队列
+定义：消息队列  
 作用：用来存放通过Handler发送的消息，按照先进先出的顺序排列
 
 #### Looper
 
-定义：轮询器，不断的取出MessageQueue中的消息并传递给Handler
+定义：轮询器，不断的取出MessageQueue中的消息并传递给Handler  
 作用：不断循环向MessageQueue获取Message，将取出的Message交付给相应的Handler
 
 #### ThreadLocal
 
-定义：线程内部的数据存储类
+定义：线程内部的数据存储类  
 作用： 通过它可以在指定的线程中存储数据，数据存储以后，只有在指定线程中可以获取到存储的数据，对于其他线程来说则无法获取到数据
 
-### Android的消息机制分析
+## Android的消息机制分析
 
 #### 通过Handler.obtainMessage获取消息
 
