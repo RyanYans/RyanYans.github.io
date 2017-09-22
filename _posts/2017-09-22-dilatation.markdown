@@ -25,10 +25,10 @@ tags:
 
 ## 扩容参数
 
-容器	 		初始容量		加载因子		扩容因子
-ArrayList:   		10				     1			   0.5
-HashMap:		16				    0.75			    1
-HashSet:		16				    0.75			    1
+容器	 		初始容量		加载因子		扩容因子  
+ArrayList:   		10				     1			   0.5  
+HashMap:		16				    0.75			    1  
+HashSet:		16				    0.75			    1  
 
 
 ----
@@ -46,6 +46,7 @@ HashSet:		16				    0.75			    1
 1. 扩容比较消耗性能,在能预料到数据量大小时, 应给定稍大于预期数据量的初始容量参数.
 2. ArrayList可接受一个int参数作为初始容量.
 3. HashMap可接受一个int参数作为初始容量和一个float参数作为扩容参数.
+
 ** HashSet同HashMap **
   
   
