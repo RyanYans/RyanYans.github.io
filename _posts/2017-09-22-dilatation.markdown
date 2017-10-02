@@ -1,7 +1,7 @@
 ---
 layout:     post
 title:      " 谈谈ArrayList、HashSet、HashMap的扩容机制 "
-subtitle:   " \" 无独有偶，谈谈ArrayList、HashSet、HashMap的扩容机制...\""
+subtitle:   " \" 浅谈ArrayList、HashSet、HashMap的扩容机制...\""
 date:       2017-09-22 00:30:00
 author:     "RyanYans"
 header-img: "img/post-bg-dilation.png"
