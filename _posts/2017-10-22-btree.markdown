@@ -53,7 +53,7 @@ tags:
 
 如下图，是一个B+树:
 
-![2-2.png](http://images.cnitblog.com/blog/94031/201403/290050048129679.png)
+![2-1.png](https://i.loli.net/2017/10/22/59ec89fdd65b6.png)
 
 ### 总结分析：
 
