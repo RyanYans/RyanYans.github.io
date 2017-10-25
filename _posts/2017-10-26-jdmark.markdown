@@ -24,14 +24,15 @@ tags:
 
 ##### 面试过程
 
-* 自我介绍
-  名字、面试岗位、英语阅读能力、动手能力、折腾能力、技术热爱、Android相关项目经历
+* 自我介绍  
+ （名字、面试岗位、英语阅读能力、动手能力、折腾能力、技术热爱、Android相关项目经历）
 
 * 数据结构题 -- 两个Stack模拟一个Queue
 
 * Http/Https通信协议（报文结构、https安全机制、实现原理、缓存）
 
-* Handler消息机制（handler - looper 对应关系、handler存在同步问题？、计算多线程执行post（Runnable）执行时间？想法）
+* Handler消息机制  
+（handler - looper 对应关系、handler存在同步问题？、计算多线程执行post（Runnable）执行时间？想法）
 
 * 项目中Rxjava + Retrofit + Debounce实现搜素时消抖的原理机制。
   
